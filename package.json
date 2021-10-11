@@ -33,7 +33,11 @@
   "scripts": {
     "eslint": "DEBUG=eslint:cli-engine eslint .",
     "eslint-fix": "DEBUG=eslint:cli-engine eslint --fix .",
-    "prepare": "husky install || exit 0"
+    "prepare": "husky install || exit 0",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "engines": {
     "npm": "use-yarn-please"
