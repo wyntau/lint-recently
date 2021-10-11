@@ -1,0 +1,9 @@
+{
+  "name": "lint-recently",
+  "version": "0.0.1",
+  "description": "lint recently git commited files",
+  "main": "index.js",
+  "repository": "git@github.com:wyntau/lint-recently.git",
+  "author": "wyntau <wyntau@outlook.com>",
+  "license": "MIT"
+}
