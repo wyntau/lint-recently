@@ -26,5 +26,8 @@
     "eslint": "DEBUG=eslint:cli-engine eslint .",
     "eslint-fix": "DEBUG=eslint:cli-engine eslint --fix .",
     "prepare": "husky install || exit 0"
+  },
+  "engines": {
+    "npm": "use-yarn-please"
   }
 }
