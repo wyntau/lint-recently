@@ -2,21 +2,10 @@
 
 'use strict'
 
-const debug = require('debug')('lint-staged:cfg')
+const debug = require('debug')('lint-recently:cfg')
 
 const { configurationError } = require('./messages')
 const validateBraces = require('./validateBraces')
-
-const TEST_DEPRECATED_KEYS = new Map([
-  ['concurrent', (key) => typeof key === 'boolean'],
-  ['chunkSize', (key) => typeof key === 'number'],
-  ['globOptions', (key) => typeof key === 'object'],
-  ['linters', (key) => typeof key === 'object'],
-  ['ignore', (key) => Array.isArray(key)],
-  ['subTaskConcurrency', (key) => typeof key === 'number'],
-  ['renderer', (key) => typeof key === 'string'],
-  ['relative', (key) => typeof key === 'boolean'],
-])
 
 /**
  * Runs config validation. Throws error if the config is not valid.
@@ -53,19 +42,6 @@ const validateConfig = (config, logger) => {
    * it can be used for validating the values at the same time.
    */
   const validatedConfig = Object.entries(config).reduce((collection, [pattern, task]) => {
-    /** Versions < 9 had more complex configuration options that are no longer supported. */
-    if (TEST_DEPRECATED_KEYS.has(pattern)) {
-      const testFn = TEST_DEPRECATED_KEYS.get(pattern)
-      if (testFn(task)) {
-        errors.push(
-          configurationError(pattern, 'Advanced configuration has been deprecated.', task)
-        )
-      }
-
-      /** Return early for deprecated keys to skip validating their (deprecated) values */
-      return collection
-    }
-
     if (
       (!Array.isArray(task) ||
         task.some((item) => typeof item !== 'string' && typeof item !== 'function')) &&
