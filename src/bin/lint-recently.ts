@@ -1,33 +1,32 @@
 #!/usr/bin/env node
 
-'use strict'
+import fs from 'fs';
+import supportsColor from 'supports-color';
+import cmdline from 'commander';
+import debugLib from 'debug';
+import pleaseUpgradeNode from 'please-upgrade-node';
 
-const fs = require('fs')
+import lintRecently from '../lib';
+import { CONFIG_STDIN_ERROR } from '../lib/messages';
 
 // Force colors for packages that depend on https://www.npmjs.com/package/supports-color
-const supportsColor = require('supports-color')
 if (supportsColor.stdout) {
-  process.env.FORCE_COLOR = supportsColor.stdout.level.toString()
+  process.env.FORCE_COLOR = supportsColor.stdout.level.toString();
 }
 
 // Do not terminate main Listr process on SIGINT
-process.on('SIGINT', () => {})
+process.on('SIGINT', () => {}); // eslint-disable-line
 
-const pkg = require('../package.json')
-require('please-upgrade-node')(
+const pkg = require('../package.json'); // eslint-disable-line
+pleaseUpgradeNode(
   Object.assign({}, pkg, {
     engines: {
       node: '>=12.13.0', // First LTS release of 'Erbium'
     },
   })
-)
+);
 
-const cmdline = require('commander')
-const debugLib = require('debug')
-const lintStaged = require('../lib')
-const { CONFIG_STDIN_ERROR } = require('../lib/messages')
-
-const debug = debugLib('lint-staged:bin')
+const debug = debugLib('lint-recently:bin');
 
 cmdline
   .version(pkg.version)
@@ -40,21 +39,18 @@ cmdline
     'the number of tasks to run concurrently, or false to run tasks serially',
     true
   )
-  .option('-q, --quiet', 'disable lint-staged’s own console output', false)
+  .option('-q, --quiet', 'disable lint-recently’s own console output', false)
   .option('-r, --relative', 'pass relative filepaths to tasks', false)
   .option('-x, --shell [path]', 'skip parsing of tasks for better shell support', false)
-  .option(
-    '-v, --verbose',
-    'show task output even when tasks succeed; by default only failed output is shown',
-    false
-  )
-  .parse(process.argv)
+  .option('-v, --verbose', 'show task output even when tasks succeed; by default only failed output is shown', false)
+  .parse(process.argv);
 
+// @ts-ignore
 if (cmdline.debug) {
-  debugLib.enable('lint-staged*')
+  debugLib.enable('lint-recently*');
 }
 
-debug('Running `lint-staged@%s`', pkg.version)
+debug('Running `lint-recently@%s`', pkg.version);
 
 /**
  * Get the maximum length of a command-line argument string based on current platform
@@ -66,17 +62,17 @@ debug('Running `lint-staged@%s`', pkg.version)
 const getMaxArgLength = () => {
   switch (process.platform) {
     case 'darwin':
-      return 262144
+      return 262144;
     case 'win32':
-      return 8191
+      return 8191;
     default:
-      return 131072
+      return 131072;
   }
-}
+};
 
-const cmdlineOptions = cmdline.opts()
+const cmdlineOptions = cmdline.opts();
 
-const options = {
+const options: Record<string, any> = {
   allowEmpty: !!cmdlineOptions.allowEmpty,
   concurrent: JSON.parse(cmdlineOptions.concurrent),
   configPath: cmdlineOptions.config,
@@ -87,30 +83,30 @@ const options = {
   relative: !!cmdlineOptions.relative,
   shell: cmdlineOptions.shell /* Either a boolean or a string pointing to the shell */,
   verbose: !!cmdlineOptions.verbose,
-}
+};
 
-debug('Options parsed from command-line:', options)
+debug('Options parsed from command-line:', options);
 
 if (options.configPath === '-') {
-  delete options.configPath
+  delete options.configPath;
   try {
-    options.config = fs.readFileSync(process.stdin.fd, 'utf8').toString().trim()
+    options.config = fs.readFileSync(process.stdin.fd, 'utf8').toString().trim();
   } catch {
-    console.error(CONFIG_STDIN_ERROR)
-    process.exit(1)
+    console.error(CONFIG_STDIN_ERROR);
+    process.exit(1);
   }
 
   try {
-    options.config = JSON.parse(options.config)
+    options.config = JSON.parse(options.config);
   } catch {
     // Let config parsing complain if it's not JSON
   }
 }
 
-lintStaged(options)
-  .then((passed) => {
-    process.exitCode = passed ? 0 : 1
+lintRecently(options)
+  .then((passed: boolean) => {
+    process.exitCode = passed ? 0 : 1;
   })
   .catch(() => {
-    process.exitCode = 1
-  })
+    process.exitCode = 1;
+  });
