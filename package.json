@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "lint recently git commited files",
   "main": "./dist/lib/index.js",
-  "bin": "./dist/bin/lint-rencently.js",
+  "bin": "./dist/bin/lint-recently.js",
   "files": [
     "dist"
   ],
@@ -45,7 +45,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build"
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "npm run prepublishOnly && npx . --debug --verbose"
   },
   "engines": {
     "npm": "use-yarn-please"
