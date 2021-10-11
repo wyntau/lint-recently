@@ -1,0 +1,4 @@
+{
+  "*.{ts,tsx}": ["eslint"],
+  "*.{js,jsx}": ["eslint"]
+}
