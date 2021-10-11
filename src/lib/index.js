@@ -1,7 +1,7 @@
 'use strict'
 
 const { cosmiconfig } = require('cosmiconfig')
-const debugLog = require('debug')('lint-staged')
+const debugLog = require('debug')('lint-recently')
 const stringifyObject = require('stringify-object')
 
 const { PREVENTED_EMPTY_COMMIT, GIT_ERROR, RESTORE_STASH_EXAMPLE } = require('./messages')
@@ -25,17 +25,11 @@ const resolveConfig = (configPath) => {
 }
 
 const loadConfig = (configPath) => {
-  const explorer = cosmiconfig('lint-staged', {
+  const explorer = cosmiconfig('lint-recently', {
     searchPlaces: [
+      '.lintrecentlyrc.json',
+      '.lintrecentlyrc.js',
       'package.json',
-      '.lintstagedrc',
-      '.lintstagedrc.json',
-      '.lintstagedrc.yaml',
-      '.lintstagedrc.yml',
-      '.lintstagedrc.js',
-      '.lintstagedrc.cjs',
-      'lint-staged.config.js',
-      'lint-staged.config.cjs',
     ],
   })
 
@@ -65,7 +59,7 @@ const loadConfig = (configPath) => {
  *
  * @returns {Promise<boolean>} Promise of whether the linting passed or failed
  */
-const lintStaged = async (
+const lintRecently = async (
   {
     allowEmpty = false,
     concurrent = true,
@@ -103,12 +97,12 @@ const lintStaged = async (
 
   if (debug) {
     // Log using logger to be able to test through `consolemock`.
-    logger.log('Running lint-staged with the following config:')
+    logger.log('Running lint-recently with the following config:')
     logger.log(stringifyObject(config, { indent: '  ' }))
   } else {
     // We might not be in debug mode but `DEBUG=lint-staged*` could have
     // been set.
-    debugLog('lint-staged config:\n%O', config)
+    debugLog('lint-recently config:\n%O', config)
   }
 
   // Unset GIT_LITERAL_PATHSPECS to not mess with path interpretation
@@ -157,4 +151,4 @@ const lintStaged = async (
   }
 }
 
-module.exports = lintStaged
+module.exports = lintRecently
