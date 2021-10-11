@@ -17,7 +17,7 @@ if (supportsColor.stdout) {
 // Do not terminate main Listr process on SIGINT
 process.on('SIGINT', () => {}); // eslint-disable-line
 
-const pkg = require('../package.json'); // eslint-disable-line
+const pkg = require('../../package.json'); // eslint-disable-line
 pleaseUpgradeNode(
   Object.assign({}, pkg, {
     engines: {
