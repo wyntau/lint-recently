@@ -208,41 +208,42 @@ const runAll = async (
   const git = new GitWorkflow({ allowEmpty, gitConfigDir, gitDir, matchedFileChunks })
 
   const runner = new Listr(
-    [
-      {
-        title: 'Preparing...',
-        task: (ctx) => git.prepare(ctx),
-      },
-      {
-        title: 'Hiding unstaged changes to partially staged files...',
-        task: (ctx) => git.hideUnstagedChanges(ctx),
-        enabled: hasPartiallyStagedFiles,
-      },
-      ...listrTasks,
-      {
-        title: 'Applying modifications...',
-        task: (ctx) => git.applyModifications(ctx),
-        skip: applyModificationsSkipped,
-      },
-      {
-        title: 'Restoring unstaged changes to partially staged files...',
-        task: (ctx) => git.restoreUnstagedChanges(ctx),
-        enabled: hasPartiallyStagedFiles,
-        skip: restoreUnstagedChangesSkipped,
-      },
-      {
-        title: 'Reverting to original state because of errors...',
-        task: (ctx) => git.restoreOriginalState(ctx),
-        enabled: restoreOriginalStateEnabled,
-        skip: restoreOriginalStateSkipped,
-      },
-      {
-        title: 'Cleaning up...',
-        task: (ctx) => git.cleanup(ctx),
-        enabled: cleanupEnabled,
-        skip: cleanupSkipped,
-      },
-    ],
+    listrTasks,
+    // [
+    //   {
+    //     title: 'Preparing...',
+    //     task: (ctx) => git.prepare(ctx),
+    //   },
+    //   {
+    //     title: 'Hiding unstaged changes to partially staged files...',
+    //     task: (ctx) => git.hideUnstagedChanges(ctx),
+    //     enabled: hasPartiallyStagedFiles,
+    //   },
+    //   ...listrTasks,
+    //   {
+    //     title: 'Applying modifications...',
+    //     task: (ctx) => git.applyModifications(ctx),
+    //     skip: applyModificationsSkipped,
+    //   },
+    //   {
+    //     title: 'Restoring unstaged changes to partially staged files...',
+    //     task: (ctx) => git.restoreUnstagedChanges(ctx),
+    //     enabled: hasPartiallyStagedFiles,
+    //     skip: restoreUnstagedChangesSkipped,
+    //   },
+    //   {
+    //     title: 'Reverting to original state because of errors...',
+    //     task: (ctx) => git.restoreOriginalState(ctx),
+    //     enabled: restoreOriginalStateEnabled,
+    //     skip: restoreOriginalStateSkipped,
+    //   },
+    //   {
+    //     title: 'Cleaning up...',
+    //     task: (ctx) => git.cleanup(ctx),
+    //     enabled: cleanupEnabled,
+    //     skip: cleanupSkipped,
+    //   },
+    // ],
     listrOptions
   )
 
