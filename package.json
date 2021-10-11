@@ -4,6 +4,9 @@
   "description": "lint recently git commited files",
   "main": "./dist/lib/index.js",
   "bin": "./dist/bin/lint-rencently.js",
+  "files": [
+    "dist"
+  ],
   "repository": "git@github.com:wyntau/lint-recently.git",
   "author": "wyntau <wyntau@outlook.com>",
   "license": "MIT",
@@ -41,5 +44,9 @@
   },
   "engines": {
     "npm": "use-yarn-please"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
   }
 }
