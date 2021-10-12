@@ -230,6 +230,11 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@types/braces@*":
+  version "3.0.1"
+  resolved "https://registry.npmmirror.com/@types/braces/download/@types/braces-3.0.1.tgz#5a284d193cfc61abb2e5a50d36ebbc50d942a32b"
+  integrity sha1-WihNGTz8Yauy5aUNNuu8UNlCoys=
+
 "@types/debug@^4.1.7":
   version "4.1.7"
   resolved "https://registry.npmmirror.com/@types/debug/download/@types/debug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"
@@ -241,6 +246,13 @@
   version "7.0.9"
   resolved "https://registry.npmmirror.com/@types/json-schema/download/@types/json-schema-7.0.9.tgz?cache=0&sync_timestamp=1632763827525&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fjson-schema%2Fdownload%2F%40types%2Fjson-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
   integrity sha1-l+3JA36gw4WFMgsolk3eOznkZg0=
+
+"@types/micromatch@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.npmmirror.com/@types/micromatch/download/@types/micromatch-4.0.2.tgz#ce29c8b166a73bf980a5727b1e4a4d099965151d"
+  integrity sha1-zinIsWanO/mApXJ7HkpNCZllFR0=
+  dependencies:
+    "@types/braces" "*"
 
 "@types/minimist@^1.2.0":
   version "1.2.2"
@@ -261,6 +273,11 @@
   version "2.4.1"
   resolved "https://registry.npmmirror.com/@types/normalize-package-data/download/@types/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha1-0zV0eaD9/dWQf+Z+F+CoXJBuEwE=
+
+"@types/normalize-path@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.npmmirror.com/@types/normalize-path/download/@types/normalize-path-3.0.0.tgz#bb5c46cab77b93350b4cf8d7ff1153f47189ae31"
+  integrity sha1-u1xGyrd7kzULTPjX/xFT9HGJrjE=
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
