@@ -1,10 +1,7 @@
 import execa from 'execa';
 import debugLib from 'debug';
 import normalize from 'normalize-path';
-import { lstat } from 'fs';
-import { join, resolve, sep } from 'path';
-import { promisify } from 'util';
-import { readFile } from './file';
+import { sep } from 'path';
 
 const debug = debugLib('lint-recently:git');
 
@@ -29,22 +26,6 @@ export async function execGit(cmd: Array<string>, options: IExecGitOptions = {})
   } catch ({ all }) {
     throw new Error(all as any);
   }
-}
-
-const fsLstat = promisify(lstat);
-
-/**
- * Resolve path to the .git directory, with special handling for
- * submodules and worktrees
- */
-async function resolveGitConfigDir(gitDir: string) {
-  const defaultDir = normalize(join(gitDir, '.git'));
-  const stats = await fsLstat(defaultDir);
-  // If .git is a directory, use it
-  if (stats.isDirectory()) return defaultDir;
-  // Otherwise .git is a file containing path to real location
-  const file = (await readFile(defaultDir))!.toString();
-  return resolve(gitDir, file.replace(/^gitdir: /, '')).trim();
 }
 
 function determineGitDir(cwd: string, relativeDir: string) {
@@ -79,14 +60,12 @@ export async function resolveGitRepo(cwd = process.cwd()) {
     // don't read the toplevel directly, it will lead to an posix conform path on non posix systems (cygwin)
     const gitRel = normalize(await execGit(['rev-parse', '--show-prefix']));
     const gitDir = determineGitDir(normalize(cwd), gitRel);
-    const gitConfigDir = normalize(await resolveGitConfigDir(gitDir));
 
     debug('Resolved git directory to be `%s`', gitDir);
-    debug('Resolved git config directory to be `%s`', gitConfigDir);
 
-    return { gitDir, gitConfigDir };
+    return { gitDir };
   } catch (error) {
     debug('Failed to resolve git repo with error:', error);
-    return { error, gitDir: null, gitConfigDir: null };
+    return { error, gitDir: null };
   }
 }
