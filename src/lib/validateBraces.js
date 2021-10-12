@@ -7,7 +7,7 @@ const { incorrectBraces } = require('./messages')
  *
  * @see https://www.gnu.org/software/bash/manual/html_node/Brace-Expansion.html
  *
- * Lint-staged uses `micromatch` for brace expansion, and its behavior is to treat
+ * lint-recently uses `micromatch` for brace expansion, and its behavior is to treat
  * invalid brace expansions as literal strings, which means they (typically) do not match
  * anything.
  *

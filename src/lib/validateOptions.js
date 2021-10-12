@@ -3,10 +3,10 @@ const { promises: fs, constants } = require('fs')
 const { invalidOption } = require('./messages')
 const { InvalidOptionsError } = require('./symbols')
 
-const debug = require('debug')('lint-staged:options')
+const debug = require('debug')('lint-recently:options')
 
 /**
- * Validate lint-staged options, either from the Node.js API or the command line flags.
+ * Validate lint-recently options, either from the Node.js API or the command line flags.
  * @param {*} options
  * @param {boolean|string} [options.shell] - Skip parsing of tasks for better shell support
  *

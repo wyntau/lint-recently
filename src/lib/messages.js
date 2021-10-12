@@ -42,7 +42,7 @@ const TASK_ERROR = 'Skipped because of errors from tasks.'
 
 const SKIPPED_GIT_ERROR = 'Skipped because of previous git error.'
 
-const GIT_ERROR = `\n  ${redBright(`${error} lint-staged failed due to a git error.`)}`
+const GIT_ERROR = `\n  ${redBright(`${error} lint-recently failed due to a git error.`)}`
 
 const invalidOption = (name, value, message) => `${redBright(`${error} Validation Error:`)}
 
@@ -50,17 +50,17 @@ const invalidOption = (name, value, message) => `${redBright(`${error} Validatio
 
   ${message}
 
-See https://github.com/okonet/lint-staged#command-line-flags`
+See https://github.com/okonet/lint-recently#command-line-flags`
 
 const PREVENTED_EMPTY_COMMIT = `
-  ${yellow(`${warning} lint-staged prevented an empty git commit.
+  ${yellow(`${warning} lint-recently prevented an empty git commit.
   Use the --allow-empty option to continue, or check your task configuration`)}
 `
 
 const RESTORE_STASH_EXAMPLE = `  Any lost modifications can be restored from a git stash:
 
     > git stash list
-    stash@{0}: automatic lint-staged backup
+    stash@{0}: automatic lint-recently backup
     > git stash apply --index stash@{0}
 `
 

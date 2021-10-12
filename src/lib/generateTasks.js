@@ -4,7 +4,7 @@ const micromatch = require('micromatch')
 const normalize = require('normalize-path')
 const path = require('path')
 
-const debug = require('debug')('lint-staged:gen-tasks')
+const debug = require('debug')('lint-recently:gen-tasks')
 
 /**
  * Generates all task commands, and filelist

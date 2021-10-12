@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('lint-staged:git')
+const debug = require('debug')('lint-recently:git')
 const execa = require('execa')
 
 /**

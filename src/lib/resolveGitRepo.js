@@ -1,7 +1,7 @@
 'use strict'
 
 const normalize = require('normalize-path')
-const debugLog = require('debug')('lint-staged:resolveGitRepo')
+const debugLog = require('debug')('lint-recently:resolveGitRepo')
 const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')

@@ -2,7 +2,7 @@
 
 const { redBright, dim } = require('colorette')
 const execa = require('execa')
-const debug = require('debug')('lint-staged:task')
+const debug = require('debug')('lint-recently:task')
 const { parseArgsStringToArgv } = require('string-argv')
 
 const { error, info } = require('./figures')

@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('lint-staged:chunkFiles')
+const debug = require('debug')('lint-recently:chunkFiles')
 const normalize = require('normalize-path')
 const path = require('path')
 

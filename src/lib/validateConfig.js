@@ -69,11 +69,11 @@ const validateConfig = (config, logger) => {
   if (errors.length) {
     const message = errors.join('\n\n')
 
-    logger.error(`Could not parse lint-staged config.
+    logger.error(`Could not parse lint-recently config.
 
 ${message}
 
-See https://github.com/okonet/lint-staged#configuration.`)
+See https://github.com/okonet/lint-recently#configuration.`)
 
     throw new Error(message)
   }

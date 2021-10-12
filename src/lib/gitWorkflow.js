@@ -1,6 +1,6 @@
 'use strict'
 
-const debug = require('debug')('lint-staged:git')
+const debug = require('debug')('lint-recently:git')
 const path = require('path')
 
 const execGit = require('./execGit')
@@ -41,9 +41,9 @@ const processRenames = (files, includeRenameFrom = true) =>
     return flattened
   }, [])
 
-const STASH = 'lint-staged automatic backup'
+const STASH = 'lint-recently automatic backup'
 
-const PATCH_UNSTAGED = 'lint-staged_unstaged.patch'
+const PATCH_UNSTAGED = 'lint-recently_unstaged.patch'
 
 const GIT_DIFF_ARGS = [
   '--binary', // support binary files
@@ -98,7 +98,7 @@ class GitWorkflow {
     const index = stashes.split('\n').findIndex((line) => line.includes(STASH))
     if (index === -1) {
       ctx.errors.add(GetBackupStashError)
-      throw new Error('lint-staged automatic backup is missing!')
+      throw new Error('lint-recently automatic backup is missing!')
     }
     return `refs/stash@{${index}}`
   }
@@ -238,7 +238,7 @@ class GitWorkflow {
     } catch (error) {
       /**
        * `git checkout --force` doesn't throw errors, so it shouldn't be possible to get here.
-       * If this does fail, the handleError method will set ctx.gitError and lint-staged will fail.
+       * If this does fail, the handleError method will set ctx.gitError and lint-recently will fail.
        */
       handleError(error, ctx, HideUnstagedChangesError)
     }
@@ -251,7 +251,7 @@ class GitWorkflow {
   async applyModifications(ctx) {
     debug('Adding task modifications to index...')
 
-    // `matchedFileChunks` includes staged files that lint-staged originally detected and matched against a task.
+    // `matchedFileChunks` includes staged files that lint-recently originally detected and matched against a task.
     // Add only these files so any 3rd-party edits to other files won't be included in the commit.
     // These additions per chunk are run "serially" to prevent race conditions.
     // Git add creates a lockfile in the repo causing concurrent operations to fail.

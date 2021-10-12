@@ -5,7 +5,7 @@
 const { Listr } = require('listr2')
 
 const chunkFiles = require('./chunkFiles')
-const debugLog = require('debug')('lint-staged:run')
+const debugLog = require('debug')('lint-recently:run')
 const execGit = require('./execGit')
 const generateTasks = require('./generateTasks')
 const getRenderer = require('./getRenderer')
@@ -34,7 +34,7 @@ const {
 } = require('./state')
 const { GitRepoError, GetStagedFilesError, GitError } = require('./symbols')
 
-const createError = (ctx) => Object.assign(new Error('lint-staged failed'), { ctx })
+const createError = (ctx) => Object.assign(new Error('lint-recently failed'), { ctx })
 
 /**
  * Executes all tasks and either resolves or rejects the promise
@@ -46,7 +46,7 @@ const createError = (ctx) => Object.assign(new Error('lint-staged failed'), { ct
  * @param {Object} [options.cwd] - Current working directory
  * @param {boolean} [options.debug] - Enable debug mode
  * @param {number} [options.maxArgLength] - Maximum argument string length
- * @param {boolean} [options.quiet] - Disable lint-staged’s own console output
+ * @param {boolean} [options.quiet] - Disable lint-recently’s own console output
  * @param {boolean} [options.relative] - Pass relative filepaths to tasks
  * @param {boolean} [options.shell] - Skip parsing of tasks for better shell support
  * @param {boolean} [options.stash] - Enable the backup stash, and revert in case of errors
@@ -87,7 +87,7 @@ const runAll = async (
     .then(() => true)
     .catch(() => false)
 
-  // Lint-staged should create a backup stash only when there's an initial commit
+  // lint-recently should create a backup stash only when there's an initial commit
   ctx.shouldBackup = hasInitialCommit && stash
   if (!ctx.shouldBackup) {
     logger.warn(skippingBackup(hasInitialCommit))
@@ -101,7 +101,7 @@ const runAll = async (
   }
   debugLog('Loaded list of staged files in git:\n%O', files)
 
-  // If there are no files avoid executing any lint-staged logic
+  // If there are no files avoid executing any lint-recently logic
   if (files.length === 0) {
     if (!quiet) ctx.output.push(NO_STAGED_FILES)
     return ctx
@@ -111,7 +111,7 @@ const runAll = async (
   const chunkCount = stagedFileChunks.length
   if (chunkCount > 1) debugLog(`Chunked staged files into ${chunkCount} part`, chunkCount)
 
-  // lint-staged 10 will automatically add modifications to index
+  // lint-recently 10 will automatically add modifications to index
   // Warn user when their command includes `git add`
   let hasDeprecatedGitAdd = false
 
@@ -190,7 +190,7 @@ const runAll = async (
   }
 
   // If all of the configured tasks should be skipped
-  // avoid executing any lint-staged logic
+  // avoid executing any lint-recently logic
   if (listrTasks.every((task) => task.skip())) {
     if (!quiet) ctx.output.push(NO_TASKS)
     return ctx

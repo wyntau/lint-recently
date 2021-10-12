@@ -40,7 +40,7 @@ const loadConfig = (configPath) => {
  * @typedef {(...any) => void} LogFunction
  * @typedef {{ error: LogFunction, log: LogFunction, warn: LogFunction }} Logger
  *
- * Root lint-staged function that is called from `bin/lint-staged`.
+ * Root lint-recently function that is called from `bin/lint-recently`.
  *
  * @param {object} options
  * @param {Object} [options.allowEmpty] - Allow empty commits when tasks revert all staged changes
@@ -50,7 +50,7 @@ const loadConfig = (configPath) => {
  * @param {Object} [options.cwd] - Current working directory
  * @param {boolean} [options.debug] - Enable debug mode
  * @param {number} [options.maxArgLength] - Maximum argument string length
- * @param {boolean} [options.quiet] - Disable lint-staged’s own console output
+ * @param {boolean} [options.quiet] - Disable lint-recently’s own console output
  * @param {boolean} [options.relative] - Pass relative filepaths to tasks
  * @param {boolean|string} [options.shell] - Skip parsing of tasks for better shell support
  * @param {boolean} [options.stash] - Enable the backup stash, and revert in case of errors
@@ -100,7 +100,7 @@ const lintRecently = async (
     logger.log('Running lint-recently with the following config:')
     logger.log(stringifyObject(config, { indent: '  ' }))
   } else {
-    // We might not be in debug mode but `DEBUG=lint-staged*` could have
+    // We might not be in debug mode but `DEBUG=lint-recently*` could have
     // been set.
     debugLog('lint-recently config:\n%O', config)
   }

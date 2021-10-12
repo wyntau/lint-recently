@@ -1,7 +1,7 @@
 'use strict'
 
 const cliTruncate = require('cli-truncate')
-const debug = require('debug')('lint-staged:make-cmd-tasks')
+const debug = require('debug')('lint-recently:make-cmd-tasks')
 
 const { configurationError } = require('./messages')
 const resolveTaskFn = require('./resolveTaskFn')
