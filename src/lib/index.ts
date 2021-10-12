@@ -1,6 +1,6 @@
 import debugLib from 'debug';
 import printTaskOutput from './printTaskOutput';
-import runAll from './runAll';
+import { runAll } from './runAll';
 import { ConfigNotFoundError } from './symbols';
 import { IConfig, validateConfig } from './config';
 import validateOptions from './validateOptions';

@@ -5,7 +5,7 @@
 import { Listr } from 'listr2';
 import debugLib from 'debug';
 
-import chunkFiles from './chunkFiles';
+import { chunkFiles } from './chunkFiles';
 
 import { execGit } from './execGit';
 import { generateTasks } from './task';
@@ -21,23 +21,6 @@ import { IConfig } from './config';
 const debugLog = debugLib('lint-recently:run');
 
 const createError = (ctx: IContext) => Object.assign(new Error('lint-recently failed'), { ctx });
-
-/**
- * Executes all tasks and either resolves or rejects the promise
- *
- * @param {object} options
- * @param {boolean | number} [options.concurrent] - The number of tasks to run concurrently, or false to run tasks serially
- * @param {Object} [options.config] - Task configuration
- * @param {Object} [options.cwd] - Current working directory
- * @param {boolean} [options.debug] - Enable debug mode
- * @param {number} [options.maxArgLength] - Maximum argument string length
- * @param {boolean} [options.quiet] - Disable lint-recently’s own console output
- * @param {boolean} [options.relative] - Pass relative filepaths to tasks
- * @param {boolean} [options.shell] - Skip parsing of tasks for better shell support
- * @param {boolean} [options.verbose] - Show task output even when tasks succeed; by default only failed output is shown
- * @param {Logger} logger
- * @returns {Promise}
- */
 
 export interface IRunAllOptions {
   concurrent?: boolean | number;
@@ -190,5 +173,3 @@ export async function runAll(options: IRunAllOptions, logger = console) {
 
   return ctx;
 }
-
-export default runAll;
