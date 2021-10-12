@@ -1,7 +1,3 @@
-'use strict';
-
-/** @typedef {import('./index').Logger} Logger */
-
 import { Listr } from 'listr2';
 import debugLib from 'debug';
 

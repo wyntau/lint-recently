@@ -1,5 +1,3 @@
-'use strict';
-
 import { redBright, bold, yellow } from 'colorette';
 import { error, info, warning } from './logger';
 
