@@ -12,13 +12,11 @@ const getRenderer = require('./getRenderer')
 const getStagedFiles = require('./getStagedFiles')
 const makeCmdTasks = require('./makeCmdTasks')
 const {
-  DEPRECATED_GIT_ADD,
   FAILED_GET_STAGED_FILES,
   NOT_GIT_REPO,
   NO_STAGED_FILES,
   NO_TASKS,
   SKIPPED_GIT_ERROR,
-  skippingBackup,
 } = require('./messages')
 const resolveGitRepo = require('./resolveGitRepo')
 const {
@@ -110,9 +108,6 @@ const runAll = async (
 
   const listrTasks = []
 
-  // Set of all staged files that matched a task glob. Values in a set are unique.
-  const matchedFiles = new Set()
-
   for (const [index, files] of stagedFileChunks.entries()) {
     const chunkTasks = generateTasks({ config, cwd, gitDir, files, relative })
     const chunkListrTasks = []
@@ -125,11 +120,6 @@ const runAll = async (
         renderer: listrOptions.renderer,
         shell,
         verbose,
-      })
-
-      // Add files from task to match set
-      task.fileList.forEach((file) => {
-        matchedFiles.add(file)
       })
 
       chunkListrTasks.push({
@@ -173,15 +163,6 @@ const runAll = async (
     if (!quiet) ctx.output.push(NO_TASKS)
     return ctx
   }
-
-  // Chunk matched files for better Windows compatibility
-  const matchedFileChunks = chunkFiles({
-    // matched files are relative to `cwd`, not `gitDir`, when `relative` is used
-    baseDir: cwd,
-    files: Array.from(matchedFiles),
-    maxArgLength,
-    relative: false,
-  })
 
   const runner = new Listr(
     listrTasks,

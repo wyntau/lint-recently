@@ -28,16 +28,6 @@ const NO_STAGED_FILES = `${info} No staged files found.`
 
 const NO_TASKS = `${info} No staged files match any configured task.`
 
-const skippingBackup = (hasInitialCommit) => {
-  const reason = hasInitialCommit ? '`--no-stash` was used' : 'there’s no initial commit yet'
-  return yellow(`${warning} Skipping backup because ${reason}.\n`)
-}
-
-const DEPRECATED_GIT_ADD = yellow(
-  `${warning} Some of your tasks use \`git add\` command. Please remove it from the config since all modifications made by tasks will be automatically added to the git commit index.
-`
-)
-
 const TASK_ERROR = 'Skipped because of errors from tasks.'
 
 const SKIPPED_GIT_ERROR = 'Skipped because of previous git error.'
@@ -69,7 +59,6 @@ const CONFIG_STDIN_ERROR = 'Error: Could not read config from stdin.'
 module.exports = {
   CONFIG_STDIN_ERROR,
   configurationError,
-  DEPRECATED_GIT_ADD,
   FAILED_GET_STAGED_FILES,
   GIT_ERROR,
   incorrectBraces,
@@ -80,6 +69,5 @@ module.exports = {
   PREVENTED_EMPTY_COMMIT,
   RESTORE_STASH_EXAMPLE,
   SKIPPED_GIT_ERROR,
-  skippingBackup,
   TASK_ERROR,
 }
