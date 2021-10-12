@@ -12,7 +12,7 @@ import { generateTasks } from './task';
 import { getRenderer } from './renderer';
 import { getRecentlyFiles } from './file';
 import makeCmdTasks from './makeCmdTasks';
-import { FAILED_GET_RECENTLY_FILES, NOT_GIT_REPO, NO_STAGED_FILES, NO_TASKS } from './messages';
+import { FAILED_GET_RECENTLY_FILES, NOT_GIT_REPO, NO_RECENTLY_FILES, NO_TASKS } from './messages';
 import resolveGitRepo from './resolveGitRepo';
 import { getInitialState, IContext } from './context';
 import { GitRepoError, GetStagedFilesError } from './symbols';
@@ -84,7 +84,7 @@ export async function runAll(options: IRunAllOptions, logger = console) {
     .catch(() => false);
   if (!hasInitialCommit) {
     if (!quiet) {
-      ctx.output.push(NO_STAGED_FILES);
+      ctx.output.push(NO_RECENTLY_FILES);
     }
     return ctx;
   }
@@ -102,7 +102,7 @@ export async function runAll(options: IRunAllOptions, logger = console) {
   // If there are no files avoid executing any lint-recently logic
   if (files.length === 0) {
     if (!quiet) {
-      ctx.output.push(NO_STAGED_FILES);
+      ctx.output.push(NO_RECENTLY_FILES);
     }
     return ctx;
   }

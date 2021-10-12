@@ -15,7 +15,7 @@ const incorrectBraces = (before, after) =>
 `
   )
 
-const NO_STAGED_FILES = `${info} No recently files found.`
+const NO_RECENTLY_FILES = `${info} No recently files found.`
 
 const NO_TASKS = `${info} No recently files match any configured task.`
 
@@ -33,7 +33,7 @@ module.exports = {
   FAILED_GET_RECENTLY_FILES,
   incorrectBraces,
   invalidOption,
-  NO_STAGED_FILES,
+  NO_RECENTLY_FILES,
   NO_TASKS,
   NOT_GIT_REPO,
   TASK_ERROR,
