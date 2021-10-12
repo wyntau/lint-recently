@@ -57,7 +57,6 @@ const runAll = async (
     quiet = false,
     relative = false,
     shell = false,
-    stash = true,
     verbose = false,
   },
   logger = console
@@ -78,18 +77,16 @@ const runAll = async (
   const hasInitialCommit = await execGit(['log', '-1'], { cwd: gitDir })
     .then(() => true)
     .catch(() => false)
-
-  // lint-recently should create a backup stash only when there's an initial commit
-  ctx.shouldBackup = hasInitialCommit && stash
-  if (!ctx.shouldBackup) {
-    logger.warn(skippingBackup(hasInitialCommit))
+  if(!hasInitialCommit){
+    if (!quiet) ctx.output.push(NO_STAGED_FILES)
+    return ctx
   }
 
   const files = await getStagedFiles({ cwd: gitDir })
   if (!files) {
     if (!quiet) ctx.output.push(FAILED_GET_STAGED_FILES)
     ctx.errors.add(GetStagedFilesError)
-    throw createError(ctx, GetStagedFilesError)
+    throw createError(ctx)
   }
   debugLog('Loaded list of staged files in git:\n%O', files)
 
@@ -102,10 +99,6 @@ const runAll = async (
   const stagedFileChunks = chunkFiles({ baseDir: gitDir, files, maxArgLength, relative })
   const chunkCount = stagedFileChunks.length
   if (chunkCount > 1) debugLog(`Chunked staged files into ${chunkCount} part`, chunkCount)
-
-  // lint-recently 10 will automatically add modifications to index
-  // Warn user when their command includes `git add`
-  let hasDeprecatedGitAdd = false
 
   const listrOptions = {
     ctx,
@@ -138,9 +131,6 @@ const runAll = async (
       task.fileList.forEach((file) => {
         matchedFiles.add(file)
       })
-
-      hasDeprecatedGitAdd =
-        hasDeprecatedGitAdd || subTasks.some((subTask) => subTask.command === 'git add')
 
       chunkListrTasks.push({
         title: `Running tasks for ${task.pattern}`,
@@ -175,10 +165,6 @@ const runAll = async (
         return false
       },
     })
-  }
-
-  if (hasDeprecatedGitAdd) {
-    logger.warn(DEPRECATED_GIT_ADD)
   }
 
   // If all of the configured tasks should be skipped
