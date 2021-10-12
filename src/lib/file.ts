@@ -49,6 +49,8 @@ export interface IGetRecentlyFilesOptions extends execa.Options {
   days?: number;
 }
 export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
+  debug('getRecentFiles with options: %O', options);
+
   const dayjsFormat = 'YYYY-MM-DD_HH:mm:ss';
   const gitFormat = '%Y-%m-%d_%H:%M:%S';
 
