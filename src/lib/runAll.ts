@@ -11,7 +11,7 @@ import { execGit } from './execGit';
 import { generateTasks } from './task';
 import { getRenderer } from './renderer';
 import { getRecentlyFiles } from './file';
-import makeCmdTasks from './makeCmdTasks';
+import { makeCmdTasks } from './makeCmdTasks';
 import { FAILED_GET_RECENTLY_FILES, NOT_GIT_REPO, NO_RECENTLY_FILES, NO_TASKS } from './messages';
 import resolveGitRepo from './resolveGitRepo';
 import { getInitialState, IContext } from './context';
