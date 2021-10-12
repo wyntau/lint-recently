@@ -30,10 +30,8 @@ const debug = debugLib('lint-recently:bin');
 
 cmdline
   .version(pkg.version)
-  .option('--allow-empty', 'allow empty commits when tasks revert all staged changes', false)
   .option('-c, --config [path]', 'path to configuration file, or - to read from stdin')
   .option('-d, --debug', 'print additional debug information', false)
-  .option('--no-stash', 'disable the backup stash, and do not revert in case of errors', false)
   .option(
     '-p, --concurrent <parallel tasks>',
     'the number of tasks to run concurrently, or false to run tasks serially',
@@ -73,12 +71,10 @@ const getMaxArgLength = () => {
 const cmdlineOptions = cmdline.opts();
 
 const options: Record<string, any> = {
-  allowEmpty: !!cmdlineOptions.allowEmpty,
   concurrent: JSON.parse(cmdlineOptions.concurrent),
   configPath: cmdlineOptions.config,
   debug: !!cmdlineOptions.debug,
   maxArgLength: getMaxArgLength() / 2,
-  stash: !!cmdlineOptions.stash, // commander inverts `no-<x>` flags to `!x`
   quiet: !!cmdlineOptions.quiet,
   relative: !!cmdlineOptions.relative,
   shell: cmdlineOptions.shell /* Either a boolean or a string pointing to the shell */,

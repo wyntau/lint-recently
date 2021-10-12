@@ -20,7 +20,6 @@ const { loadConfig } = require('./config');
  * Root lint-recently function that is called from `bin/lint-recently`.
  *
  * @param {object} options
- * @param {Object} [options.allowEmpty] - Allow empty commits when tasks revert all staged changes
  * @param {boolean | number} [options.concurrent] - The number of tasks to run concurrently, or false to run tasks serially
  * @param {object}  [options.config] - Object with configuration for programmatic API
  * @param {string} [options.configPath] - Path to configuration file
@@ -30,7 +29,6 @@ const { loadConfig } = require('./config');
  * @param {boolean} [options.quiet] - Disable lint-recently’s own console output
  * @param {boolean} [options.relative] - Pass relative filepaths to tasks
  * @param {boolean|string} [options.shell] - Skip parsing of tasks for better shell support
- * @param {boolean} [options.stash] - Enable the backup stash, and revert in case of errors
  * @param {boolean} [options.verbose] - Show task output even when tasks succeed; by default only failed output is shown
  * @param {Logger} [logger]
  *
@@ -38,7 +36,6 @@ const { loadConfig } = require('./config');
  */
 const lintRecently = async (
   {
-    allowEmpty = false,
     concurrent = true,
     config: configObject,
     configPath,
@@ -48,7 +45,6 @@ const lintRecently = async (
     quiet = false,
     relative = false,
     shell = false,
-    stash = true,
     verbose = false,
   } = {},
   logger = console
@@ -89,7 +85,6 @@ const lintRecently = async (
   try {
     const ctx = await runAll(
       {
-        allowEmpty,
         concurrent,
         config,
         cwd,
@@ -98,7 +93,6 @@ const lintRecently = async (
         quiet,
         relative,
         shell,
-        stash,
         verbose,
       },
       logger
