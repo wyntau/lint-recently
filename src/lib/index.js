@@ -4,14 +4,10 @@ const { cosmiconfig } = require('cosmiconfig')
 const debugLog = require('debug')('lint-recently')
 const stringifyObject = require('stringify-object')
 
-const { PREVENTED_EMPTY_COMMIT, GIT_ERROR, RESTORE_STASH_EXAMPLE } = require('./messages')
 const printTaskOutput = require('./printTaskOutput')
 const runAll = require('./runAll')
 const {
-  ApplyEmptyCommitError,
   ConfigNotFoundError,
-  GetBackupStashError,
-  GitError,
 } = require('./symbols')
 const validateConfig = require('./validateConfig')
 const validateOptions = require('./validateOptions')
@@ -132,16 +128,6 @@ const lintRecently = async (
   } catch (runAllError) {
     if (runAllError && runAllError.ctx && runAllError.ctx.errors) {
       const { ctx } = runAllError
-      if (ctx.errors.has(ApplyEmptyCommitError)) {
-        logger.warn(PREVENTED_EMPTY_COMMIT)
-      } else if (ctx.errors.has(GitError) && !ctx.errors.has(GetBackupStashError)) {
-        logger.error(GIT_ERROR)
-        if (ctx.shouldBackup) {
-          // No sense to show this if the backup stash itself is missing.
-          logger.error(RESTORE_STASH_EXAMPLE)
-        }
-      }
-
       printTaskOutput(ctx, logger)
       return false
     }
