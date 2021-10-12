@@ -9,7 +9,7 @@ const debugLog = require('debug')('lint-recently:run')
 const execGit = require('./execGit')
 const generateTasks = require('./generateTasks')
 const { getRenderer } = require('./renderer')
-const getRecentlyFiles = require('./getRecentlyFiles')
+const { getRecentlyFiles } = require('./file')
 const makeCmdTasks = require('./makeCmdTasks')
 const {
   FAILED_GET_RECENTLY_FILES,
