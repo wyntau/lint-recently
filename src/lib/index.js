@@ -8,7 +8,7 @@ const runAll = require('./runAll')
 const {
   ConfigNotFoundError,
 } = require('./symbols')
-const validateConfig = require('./validateConfig')
+const { validateConfig } = require('./config')
 const validateOptions = require('./validateOptions')
 
 const { loadConfig } = require('./config');
