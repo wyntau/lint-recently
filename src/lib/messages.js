@@ -5,15 +5,6 @@ const format = require('stringify-object')
 
 const { error, info, warning } = require('./figures')
 
-const configurationError = (opt, helpMsg, value) =>
-  `${redBright(`${error} Validation Error:`)}
-
-  Invalid value for '${bold(opt)}': ${bold(
-    format(value, { inlineCharacterLimit: Number.POSITIVE_INFINITY })
-  )}
-
-  ${helpMsg}`
-
 const NOT_GIT_REPO = redBright(`${error} Current directory is not a git directory!`)
 
 const FAILED_GET_RECENTLY_FILES = redBright(`${error} Failed to get recently files!`)
@@ -42,7 +33,6 @@ const CONFIG_STDIN_ERROR = 'Error: Could not read config from stdin.'
 
 module.exports = {
   CONFIG_STDIN_ERROR,
-  configurationError,
   FAILED_GET_RECENTLY_FILES,
   incorrectBraces,
   invalidOption,

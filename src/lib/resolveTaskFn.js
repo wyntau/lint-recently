@@ -69,7 +69,6 @@ const makeErr = (command, result, ctx) => {
  * @param {Object} options
  * @param {string} options.command — Linter task
  * @param {String} options.gitDir - Current git repo path
- * @param {Boolean} options.isFn - Whether the linter task is a function
  * @param {Array<string>} options.files — Filepaths to run the linter task against
  * @param {Boolean} [options.relative] — Whether the filepaths should be relative
  * @param {Boolean} [options.shell] — Whether to skip parsing linter task for better shell support
@@ -80,7 +79,6 @@ module.exports = function resolveTaskFn({
   command,
   files,
   gitDir,
-  isFn,
   relative,
   shell = false,
   verbose = false,
@@ -101,8 +99,8 @@ module.exports = function resolveTaskFn({
 
   return async (ctx = getInitialState()) => {
     const result = await (shell
-      ? execa.command(isFn ? command : `${command} ${files.join(' ')}`, execaOptions)
-      : execa(cmd, isFn ? args : args.concat(files), execaOptions))
+      ? execa.command(`${command} ${files.join(' ')}`, execaOptions)
+      : execa(cmd, args.concat(files), execaOptions))
 
     if (result.failed || result.killed || result.signal != null) {
       throw makeErr(command, result, ctx)

@@ -1,6 +1,5 @@
 import { cosmiconfig } from 'cosmiconfig';
 import debugLib from 'debug';
-import { configurationError } from './messages';
 import validateBraces from './validateBraces';
 import Ajv from 'ajv';
 
