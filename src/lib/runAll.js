@@ -8,7 +8,7 @@ const chunkFiles = require('./chunkFiles')
 const debugLog = require('debug')('lint-recently:run')
 const execGit = require('./execGit')
 const generateTasks = require('./generateTasks')
-const getRenderer = require('./getRenderer')
+const { getRenderer } = require('./getRenderer')
 const getStagedFiles = require('./getStagedFiles')
 const makeCmdTasks = require('./makeCmdTasks')
 const {
@@ -96,7 +96,9 @@ const runAll = async (
 
   const stagedFileChunks = chunkFiles({ baseDir: gitDir, files, maxArgLength, relative })
   const chunkCount = stagedFileChunks.length
-  if (chunkCount > 1) debugLog(`Chunked staged files into ${chunkCount} part`, chunkCount)
+  if (chunkCount > 1) {
+    debugLog(`Chunked staged files into ${chunkCount} part`, chunkCount);
+  }
 
   const listrOptions = {
     ctx,
