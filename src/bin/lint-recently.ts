@@ -77,7 +77,7 @@ const options: Record<string, any> = {
   verbose: !!cmdlineOptions.verbose,
 };
 
-debug('Options parsed from command-line:', options);
+debug('Options parsed from command-line: %O', options);
 
 lintRecently(options)
   .then((passed: boolean) => {
