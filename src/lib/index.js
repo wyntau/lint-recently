@@ -1,7 +1,6 @@
 'use strict'
 
 const debugLog = require('debug')('lint-recently')
-const stringifyObject = require('stringify-object')
 
 const printTaskOutput = require('./printTaskOutput')
 const runAll = require('./runAll')
