@@ -2,10 +2,45 @@ import { cosmiconfig } from 'cosmiconfig';
 import debugLib from 'debug';
 import { configurationError } from './messages';
 import validateBraces from './validateBraces';
+import Ajv from 'ajv';
 
-export type IConfig = Record<string, any>;
-
+const ajv = new Ajv();
 const debug = debugLib('lint-recently:cfg');
+
+const configSchema = {
+  $schema: 'http://json-schema.org/draft-07/schema',
+  $id: 'configSchema',
+  title: 'lint-recently config',
+  type: 'object',
+  properties: {
+    days: {
+      type: 'number',
+      minimum: 1,
+    },
+    patterns: {
+      type: 'object',
+      additionalProperties: {
+        oneOf: [
+          {
+            type: 'string',
+          },
+          {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+          },
+        ],
+      },
+    },
+  },
+  required: ['patterns'],
+};
+
+export interface IConfig {
+  days?: number;
+  patterns: Record<string, string | Array<string>>;
+}
 
 function resolveConfig(configPath: string) {
   try {
@@ -26,43 +61,17 @@ export function loadConfig(configPath: string) {
 export function validateConfig(config: IConfig, logger: any) {
   debug('Validating config');
 
-  if (!config || (typeof config !== 'object' && typeof config !== 'function')) {
-    throw new Error('Configuration should be an object or a function!');
-  }
-
-  /**
-   * Function configurations receive all staged files as their argument.
-   * They are not further validated here to make sure the function gets
-   * evaluated only once.
-   *
-   * @see makeCmdTasks
-   */
-  if (typeof config === 'function') {
-    return { '*': config };
-  }
-
-  if (Object.entries(config).length === 0) {
-    throw new Error('Configuration should not be empty!');
+  const validateFn = ajv.compile(configSchema);
+  if (!validateFn(config)) {
+    const message = validateFn.errors?.map((item) => item.message).join('\n\n');
+    logger.error(`Could not parse lint-recently config.
+${message}`);
+    throw new Error(message);
   }
 
   const errors: Array<string> = [];
-
-  /**
-   * Create a new validated config because the keys (patterns) might change.
-   * Since the Object.reduce method already loops through each entry in the config,
-   * it can be used for validating the values at the same time.
-   */
-  const validatedConfig = Object.entries(config).reduce((collection, [pattern, task]) => {
-    if (
-      (!Array.isArray(task) || task.some((item) => typeof item !== 'string' && typeof item !== 'function')) &&
-      typeof task !== 'string' &&
-      typeof task !== 'function'
-    ) {
-      errors.push(
-        configurationError(pattern, 'Should be a string, a function, or an array of strings and functions.', task)
-      );
-    }
-
+  const validatedConfig: IConfig = Object.assign({}, config);
+  validatedConfig.patterns = Object.entries(validatedConfig.patterns).reduce((collection, [pattern, task]) => {
     /**
      * A typical configuration error is using invalid brace expansion, like `*.{js}`.
      * These are automatically fixed and warned about.
@@ -74,13 +83,8 @@ export function validateConfig(config: IConfig, logger: any) {
 
   if (errors.length) {
     const message = errors.join('\n\n');
-
-    logger.error(`Could not parse lint-recently config.
-
-${message}
-
-See https://github.com/okonet/lint-recently#configuration.`);
-
+    logger.error(`Could not parse lint-staged config.
+${message}`);
     throw new Error(message);
   }
 

@@ -7,20 +7,26 @@ import { IConfig } from './config';
 const debug = debugLib('lint-recently:task');
 
 export interface IGenerateTasksOptions {
-  config: IConfig;
+  patterns: IConfig['patterns'];
   cwd?: string;
   gitDir: string;
   files: Array<string>;
   relative?: boolean;
 }
 
-export function generateTasks({ config, cwd = process.cwd(), gitDir, files, relative = false }: IGenerateTasksOptions) {
+export function generateTasks({
+  patterns,
+  cwd = process.cwd(),
+  gitDir,
+  files,
+  relative = false,
+}: IGenerateTasksOptions) {
   debug('Generating linter tasks');
 
   const absoluteFiles = files.map((file: string) => normalize(path.resolve(gitDir, file)));
   const relativeFiles = absoluteFiles.map((file: string) => normalize(path.relative(cwd, file)));
 
-  return Object.entries(config).map(([rawPattern, commands]) => {
+  return Object.entries(patterns).map(([rawPattern, commands]) => {
     const pattern = rawPattern;
 
     const isParentDirPattern = pattern.startsWith('../');

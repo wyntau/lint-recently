@@ -80,7 +80,7 @@ const runAll = async (
     return ctx
   }
 
-  const files = await getRecentlyFiles({ cwd: gitDir })
+  const files = await getRecentlyFiles({ cwd: gitDir, days: config.days })
   if (!files) {
     if (!quiet) {
       ctx.output.push(FAILED_GET_RECENTLY_FILES)
@@ -115,7 +115,7 @@ const runAll = async (
   const listrTasks = []
 
   for (const [index, files] of stagedFileChunks.entries()) {
-    const chunkTasks = generateTasks({ config, cwd, gitDir, files, relative })
+    const chunkTasks = generateTasks({ patterns: config.patterns, cwd, gitDir, files, relative })
     const chunkListrTasks = []
 
     for (const task of chunkTasks) {

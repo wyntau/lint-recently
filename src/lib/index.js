@@ -1,6 +1,6 @@
 'use strict'
 
-const debugLog = require('debug')('lint-recently')
+const debugLog = require('debug')('lint-recently:main')
 
 const printTaskOutput = require('./printTaskOutput')
 const runAll = require('./runAll')
