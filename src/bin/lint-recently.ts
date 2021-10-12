@@ -43,9 +43,11 @@ cmdline
   .option('-v, --verbose', 'show task output even when tasks succeed; by default only failed output is shown', false)
   .parse(process.argv);
 
+const cmdlineOptions = cmdline.opts();
+
 // @ts-ignore
-if (cmdline.debug) {
-  debugLib.enable('lint-recently*');
+if (cmdlineOptions.debug) {
+  debugLib.enable('lint-recently:*');
 }
 
 debug('Running `lint-recently@%s`', pkg.version);
@@ -67,8 +69,6 @@ const getMaxArgLength = () => {
       return 131072;
   }
 };
-
-const cmdlineOptions = cmdline.opts();
 
 const options: Record<string, any> = {
   concurrent: JSON.parse(cmdlineOptions.concurrent),
