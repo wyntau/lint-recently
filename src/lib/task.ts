@@ -14,15 +14,10 @@ export interface IGenerateTasksOptions {
   relative?: boolean;
 }
 
-export function generateTasks({
-  patterns,
-  cwd = process.cwd(),
-  gitDir,
-  files,
-  relative = false,
-}: IGenerateTasksOptions) {
+export function generateTasks(options: IGenerateTasksOptions) {
   debug('Generating linter tasks');
 
+  const { patterns, cwd = process.cwd(), gitDir, files, relative = false } = options;
   const absoluteFiles = files.map((file: string) => normalize(path.resolve(gitDir, file)));
   const relativeFiles = absoluteFiles.map((file: string) => normalize(path.relative(cwd, file)));
 
