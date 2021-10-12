@@ -3,7 +3,7 @@ import { readFile as _readFile } from 'fs';
 import { promisify } from 'util';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { execGit } from './execGit';
+import { execGit } from './git';
 import execa from 'execa';
 
 dayjs.extend(customParseFormat);

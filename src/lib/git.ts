@@ -1,14 +1,35 @@
-'use strict';
-
-import normalize from 'normalize-path';
+import execa from 'execa';
 import debugLib from 'debug';
+import normalize from 'normalize-path';
 import { lstat } from 'fs';
 import { join, resolve, sep } from 'path';
 import { promisify } from 'util';
-import { execGit } from './execGit';
 import { readFile } from './file';
 
-const debugLog = debugLib('lint-recently:resolveGitRepo');
+const debug = debugLib('lint-recently:git');
+
+/**
+ * Explicitly never recurse commands into submodules, overriding local/global configuration.
+ * @see https://git-scm.com/docs/git-config#Documentation/git-config.txt-submodulerecurse
+ */
+const NO_SUBMODULE_RECURSE = ['-c', 'submodule.recurse=false'];
+
+const GIT_GLOBAL_OPTIONS = [...NO_SUBMODULE_RECURSE];
+
+export type IExecGitOptions = execa.Options;
+export async function execGit(cmd: Array<string>, options: IExecGitOptions = {}) {
+  debug('Running git command: %O', cmd);
+  try {
+    const { stdout } = await execa('git', GIT_GLOBAL_OPTIONS.concat(cmd), {
+      ...options,
+      all: true,
+      cwd: options.cwd || process.cwd(),
+    });
+    return stdout;
+  } catch ({ all }) {
+    throw new Error(all as any);
+  }
+}
 
 const fsLstat = promisify(lstat);
 
@@ -46,12 +67,12 @@ function determineGitDir(cwd: string, relativeDir: string) {
  */
 export async function resolveGitRepo(cwd = process.cwd()) {
   try {
-    debugLog('Resolving git repo from `%s`', cwd);
+    debug('Resolving git repo from `%s`', cwd);
 
     // Unset GIT_DIR before running any git operations in case it's pointing to an incorrect location
-    debugLog('Unset GIT_DIR (was `%s`)', process.env.GIT_DIR);
+    debug('Unset GIT_DIR (was `%s`)', process.env.GIT_DIR);
     delete process.env.GIT_DIR;
-    debugLog('Unset GIT_WORK_TREE (was `%s`)', process.env.GIT_WORK_TREE);
+    debug('Unset GIT_WORK_TREE (was `%s`)', process.env.GIT_WORK_TREE);
     delete process.env.GIT_WORK_TREE;
 
     // read the path of the current directory relative to the top-level directory
@@ -60,12 +81,12 @@ export async function resolveGitRepo(cwd = process.cwd()) {
     const gitDir = determineGitDir(normalize(cwd), gitRel);
     const gitConfigDir = normalize(await resolveGitConfigDir(gitDir));
 
-    debugLog('Resolved git directory to be `%s`', gitDir);
-    debugLog('Resolved git config directory to be `%s`', gitConfigDir);
+    debug('Resolved git directory to be `%s`', gitDir);
+    debug('Resolved git config directory to be `%s`', gitConfigDir);
 
     return { gitDir, gitConfigDir };
   } catch (error) {
-    debugLog('Failed to resolve git repo with error:', error);
+    debug('Failed to resolve git repo with error:', error);
     return { error, gitDir: null, gitConfigDir: null };
   }
 }
