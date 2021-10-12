@@ -29,10 +29,7 @@ const invalidOption = (name, value, message) => `${redBright(`${error} Validatio
 
 See https://github.com/okonet/lint-recently#command-line-flags`
 
-const CONFIG_STDIN_ERROR = 'Error: Could not read config from stdin.'
-
 module.exports = {
-  CONFIG_STDIN_ERROR,
   FAILED_GET_RECENTLY_FILES,
   incorrectBraces,
   invalidOption,

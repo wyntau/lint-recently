@@ -1,13 +1,11 @@
 #!/usr/bin/env node
 
-import fs from 'fs';
 import supportsColor from 'supports-color';
 import cmdline from 'commander';
 import debugLib from 'debug';
 import pleaseUpgradeNode from 'please-upgrade-node';
 
 import lintRecently from '../lib';
-import { CONFIG_STDIN_ERROR } from '../lib/messages';
 
 // Force colors for packages that depend on https://www.npmjs.com/package/supports-color
 if (supportsColor.stdout) {
@@ -30,7 +28,6 @@ const debug = debugLib('lint-recently:bin');
 
 cmdline
   .version(pkg.version)
-  .option('-c, --config [path]', 'path to configuration file, or - to read from stdin')
   .option('-d, --debug', 'print additional debug information', false)
   .option(
     '-p, --concurrent <parallel tasks>',
@@ -72,7 +69,6 @@ const getMaxArgLength = () => {
 
 const options: Record<string, any> = {
   concurrent: JSON.parse(cmdlineOptions.concurrent),
-  configPath: cmdlineOptions.config,
   debug: !!cmdlineOptions.debug,
   maxArgLength: getMaxArgLength() / 2,
   quiet: !!cmdlineOptions.quiet,
@@ -82,22 +78,6 @@ const options: Record<string, any> = {
 };
 
 debug('Options parsed from command-line:', options);
-
-if (options.configPath === '-') {
-  delete options.configPath;
-  try {
-    options.config = fs.readFileSync(process.stdin.fd, 'utf8').toString().trim();
-  } catch {
-    console.error(CONFIG_STDIN_ERROR);
-    process.exit(1);
-  }
-
-  try {
-    options.config = JSON.parse(options.config);
-  } catch {
-    // Let config parsing complain if it's not JSON
-  }
-}
 
 lintRecently(options)
   .then((passed: boolean) => {
