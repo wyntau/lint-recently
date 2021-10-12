@@ -1,5 +1,5 @@
 export interface IContext {
-  errors: Set<string>;
+  errors: Set<string | symbol>;
   output: Array<string>;
   quiet: boolean;
 }

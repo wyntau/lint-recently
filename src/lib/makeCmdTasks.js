@@ -30,8 +30,8 @@ const getTitleLength = (renderer, columns = process.stdout.columns) => {
  * @param {Array<string>} options.files
  * @param {string} options.gitDir
  * @param {string} options.renderer
- * @param {Boolean} shell
- * @param {Boolean} verbose
+ * @param {Boolean} options.shell
+ * @param {Boolean} options.verbose
  */
 const makeCmdTasks = async ({ commands, files, gitDir, renderer, shell, verbose }) => {
   debug('Creating listr tasks for commands %o', commands)

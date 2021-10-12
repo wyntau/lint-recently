@@ -57,7 +57,7 @@ export function loadConfig(configPath: string) {
   return configPath ? explorer.load(resolveConfig(configPath)) : explorer.search();
 }
 
-export function validateConfig(config: IConfig, logger: any) {
+export function validateConfig(config: IConfig, logger: any): IConfig {
   debug('Validating config');
 
   const validateFn = ajv.compile(configSchema);
