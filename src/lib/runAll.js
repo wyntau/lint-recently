@@ -6,7 +6,7 @@ const { Listr } = require('listr2')
 
 const chunkFiles = require('./chunkFiles')
 const debugLog = require('debug')('lint-recently:run')
-const execGit = require('./execGit')
+const { execGit } = require('./execGit')
 const { generateTasks } = require('./task')
 const { getRenderer } = require('./renderer')
 const { getRecentlyFiles } = require('./file')

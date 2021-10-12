@@ -5,7 +5,8 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
-import execGit from './execGit';
+import { execGit } from './execGit';
+import execa from 'execa';
 
 const debug = debugLib('lint-recently:file');
 const fsReadFile = promisify(_readFile);
@@ -44,7 +45,10 @@ export const writeFile = async (filename: string, buffer: Buffer) => {
   await fsWriteFile(filename, buffer);
 };
 
-export async function getRecentlyFiles(options = {}) {
+export interface IGetRecentlyFilesOptions extends execa.Options {
+  days?: number;
+}
+export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
   const dayjsFormat = 'YYYY-MM-DD_HH:mm:ss';
   const gitFormat = '%Y-%m-%d_%H:%M:%S';
 
@@ -55,7 +59,9 @@ export async function getRecentlyFiles(options = {}) {
     return [];
   }
 
-  const commitDateBefore = dayjs(commitDateLatest, dayjsFormat).subtract(3, 'day').format(dayjsFormat);
+  const commitDateBefore = dayjs(commitDateLatest, dayjsFormat)
+    .subtract(options.days ?? 3, 'day')
+    .format(dayjsFormat);
   const commitHashLatest = await execGit(['log', '-1', '--pretty=format:%H', 'HEAD']);
   let commitHashBefore = await execGit([
     'log',

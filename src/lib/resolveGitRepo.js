@@ -6,7 +6,7 @@ const fs = require('fs')
 const path = require('path')
 const { promisify } = require('util')
 
-const execGit = require('./execGit')
+const { execGit } = require('./execGit')
 const { readFile } = require('./file')
 
 const fsLstat = promisify(fs.lstat)
