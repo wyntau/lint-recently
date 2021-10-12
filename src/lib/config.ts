@@ -2,6 +2,7 @@ import { cosmiconfig } from 'cosmiconfig';
 import debugLib from 'debug';
 import { validateBraces } from './validateBraces';
 import Ajv from 'ajv';
+import { ILogger } from './logger';
 
 const ajv = new Ajv();
 const debug = debugLib('lint-recently:cfg');
@@ -57,7 +58,7 @@ export function loadConfig(configPath?: string) {
   return configPath ? explorer.load(resolveConfig(configPath)) : explorer.search();
 }
 
-export function validateConfig(config: IConfig, logger: any): IConfig {
+export function validateConfig(config: IConfig, logger: ILogger): IConfig {
   debug('Validating config');
 
   const validateFn = ajv.compile(configSchema);

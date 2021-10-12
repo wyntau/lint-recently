@@ -1,5 +1,5 @@
 import debugLib from 'debug';
-import { printTaskOutput } from './printTaskOutput';
+import { printTaskOutput } from './logger';
 import { runAll } from './runAll';
 import { ConfigNotFoundError } from './symbols';
 import { IConfig, validateConfig } from './config';
