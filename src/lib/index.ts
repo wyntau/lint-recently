@@ -3,7 +3,7 @@ import { printTaskOutput } from './logger';
 import { runAll } from './runAll';
 import { ConfigNotFoundError } from './symbols';
 import { IConfig, validateConfig } from './config';
-import { validateOptions } from './validateOptions';
+import { validateOptions } from './validator';
 
 import { loadConfig } from './config';
 

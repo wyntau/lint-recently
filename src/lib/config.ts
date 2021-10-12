@@ -1,6 +1,6 @@
 import { cosmiconfig } from 'cosmiconfig';
 import debugLib from 'debug';
-import { validateBraces } from './validateBraces';
+import { validateBraces } from './validator';
 import Ajv from 'ajv';
 import { ILogger } from './logger';
 
