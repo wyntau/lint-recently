@@ -6,7 +6,7 @@ const debug = require('debug')('lint-recently:task')
 const { parseArgsStringToArgv } = require('string-argv')
 
 const { error, info } = require('./figures')
-const { getInitialState } = require('./state')
+const { getInitialState } = require('./context')
 const { TaskError } = require('./symbols')
 
 const getTag = ({ code, killed, signal }) => signal || (killed && 'KILLED') || code || 'FAILED'

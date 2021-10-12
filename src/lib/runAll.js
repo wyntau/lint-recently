@@ -20,7 +20,7 @@ const {
 const resolveGitRepo = require('./resolveGitRepo')
 const {
   getInitialState,
-} = require('./state')
+} = require('./context')
 const { GitRepoError, GetStagedFilesError } = require('./symbols')
 
 const createError = (ctx) => Object.assign(new Error('lint-recently failed'), { ctx })
