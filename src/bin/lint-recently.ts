@@ -45,7 +45,6 @@ cmdline
 
 const cmdlineOptions = cmdline.opts();
 
-// @ts-ignore
 if (cmdlineOptions.debug) {
   debugLib.enable('lint-recently:*');
 }
