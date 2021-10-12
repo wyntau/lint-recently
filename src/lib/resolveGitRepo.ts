@@ -16,7 +16,7 @@ const fsLstat = promisify(lstat);
  * Resolve path to the .git directory, with special handling for
  * submodules and worktrees
  */
-const resolveGitConfigDir = async (gitDir: string) => {
+async function resolveGitConfigDir(gitDir: string) {
   const defaultDir = normalize(join(gitDir, '.git'));
   const stats = await fsLstat(defaultDir);
   // If .git is a directory, use it
@@ -24,9 +24,9 @@ const resolveGitConfigDir = async (gitDir: string) => {
   // Otherwise .git is a file containing path to real location
   const file = (await readFile(defaultDir))!.toString();
   return resolve(gitDir, file.replace(/^gitdir: /, '')).trim();
-};
+}
 
-const determineGitDir = (cwd: string, relativeDir: string) => {
+function determineGitDir(cwd: string, relativeDir: string) {
   // if relative dir and cwd have different endings normalize it
   // this happens under windows, where normalize is unable to normalize git's output
   if (relativeDir && relativeDir.endsWith(sep)) {
@@ -39,12 +39,12 @@ const determineGitDir = (cwd: string, relativeDir: string) => {
     // the current working dir is the top-level git directory
     return normalize(cwd);
   }
-};
+}
 
 /**
  * Resolve git directory and possible submodule paths
  */
-export const resolveGitRepo = async (cwd = process.cwd()) => {
+export async function resolveGitRepo(cwd = process.cwd()) {
   try {
     debugLog('Resolving git repo from `%s`', cwd);
 
@@ -68,4 +68,4 @@ export const resolveGitRepo = async (cwd = process.cwd()) => {
     debugLog('Failed to resolve git repo with error:', error);
     return { error, gitDir: null, gitConfigDir: null };
   }
-};
+}
