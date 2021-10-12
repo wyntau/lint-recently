@@ -1,4 +1,4 @@
-const { incorrectBraces } = require('./messages')
+import { incorrectBraces } from './messages';
 
 /**
  * A correctly-formed brace expansion must contain unquoted opening and closing braces,
@@ -28,44 +28,27 @@ const { incorrectBraces } = require('./messages')
  * - *.${js}      // dollar-sign inhibits expansion, so treated literally
  * - *.{js\,ts}   // the comma is escaped, so treated literally
  */
-const BRACES_REGEXP = /(?<![\\$])({)(?:(?!(?<!\\),|\.\.|\{|\}).)*?(?<!\\)(})/g
+const BRACES_REGEXP = /(?<![\\$])({)(?:(?!(?<!\\),|\.\.|\{|\}).)*?(?<!\\)(})/g;
 
-/**
- * @param {string} pattern
- * @returns {string}
- */
-const withoutIncorrectBraces = (pattern) => {
-  let output = `${pattern}`
-  let match = null
+const withoutIncorrectBraces = (pattern: string) => {
+  let output = `${pattern}`;
+  let match = null;
 
   while ((match = BRACES_REGEXP.exec(pattern))) {
-    const fullMatch = match[0]
-    const withoutBraces = fullMatch.replace(/{/, '').replace(/}/, '')
-    output = output.replace(fullMatch, withoutBraces)
+    const fullMatch = match[0];
+    const withoutBraces = fullMatch.replace(/{/, '').replace(/}/, '');
+    output = output.replace(fullMatch, withoutBraces);
   }
 
-  return output
-}
+  return output;
+};
 
-/**
- * Validate and remove incorrect brace expansions from glob pattern.
- * For example `*.{js}` is incorrect because it doesn't contain a `,` or `..`,
- * and will be reformatted as `*.js`.
- *
- * @param {string} pattern the glob pattern
- * @param {*} logger
- * @returns {string}
- */
-const validateBraces = (pattern, logger) => {
-  const fixedPattern = withoutIncorrectBraces(pattern)
+export function validateBraces(pattern: string, logger: any) {
+  const fixedPattern = withoutIncorrectBraces(pattern);
 
   if (fixedPattern !== pattern) {
-    logger.warn(incorrectBraces(pattern, fixedPattern))
+    logger.warn(incorrectBraces(pattern, fixedPattern));
   }
 
-  return fixedPattern
+  return fixedPattern;
 }
-
-module.exports = validateBraces
-
-module.exports.BRACES_REGEXP = BRACES_REGEXP

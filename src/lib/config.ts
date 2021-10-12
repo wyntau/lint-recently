@@ -1,6 +1,6 @@
 import { cosmiconfig } from 'cosmiconfig';
 import debugLib from 'debug';
-import validateBraces from './validateBraces';
+import { validateBraces } from './validateBraces';
 import Ajv from 'ajv';
 
 const ajv = new Ajv();
