@@ -1,4 +1,4 @@
-export interface IState {
+export interface IContext {
   errors: Set<string>;
   output: Array<string>;
   quiet: boolean;
@@ -8,7 +8,7 @@ export interface IGetInitialStateParams {
   quiet?: boolean;
 }
 
-export function getInitialState(params: IGetInitialStateParams): IState {
+export function getInitialState(params: IGetInitialStateParams): IContext {
   return {
     errors: new Set([]),
     output: [],

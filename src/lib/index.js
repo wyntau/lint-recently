@@ -1,6 +1,5 @@
 'use strict'
 
-const { cosmiconfig } = require('cosmiconfig')
 const debugLog = require('debug')('lint-recently')
 const stringifyObject = require('stringify-object')
 
@@ -12,25 +11,7 @@ const {
 const validateConfig = require('./validateConfig')
 const validateOptions = require('./validateOptions')
 
-const resolveConfig = (configPath) => {
-  try {
-    return require.resolve(configPath)
-  } catch {
-    return configPath
-  }
-}
-
-const loadConfig = (configPath) => {
-  const explorer = cosmiconfig('lint-recently', {
-    searchPlaces: [
-      '.lintrecentlyrc.json',
-      '.lintrecentlyrc.js',
-      'package.json',
-    ],
-  })
-
-  return configPath ? explorer.load(resolveConfig(configPath)) : explorer.search()
-}
+const { loadConfig } = require('./config');
 
 /**
  * @typedef {(...any) => void} LogFunction
