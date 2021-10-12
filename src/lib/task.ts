@@ -7,7 +7,7 @@ import cliTruncate from 'cli-truncate';
 import { redBright, dim } from 'colorette';
 import execa from 'execa';
 import { parseArgsStringToArgv } from 'string-argv';
-import { error, info } from './figures';
+import { error, info } from './logger';
 import { getInitialState, IContext } from './context';
 import { TaskError } from './symbols';
 

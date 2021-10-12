@@ -1,3 +1,5 @@
+import { blue, redBright, yellow } from 'colorette';
+import { figures } from 'listr2';
 import { IContext } from './context';
 
 export type ILogger = Console;
@@ -9,3 +11,7 @@ export function printTaskOutput(ctx: IContext, logger: ILogger) {
     log(line);
   }
 }
+
+export const info = blue(figures.arrowRight);
+export const error = redBright(figures.cross);
+export const warning = yellow(figures.warning);

@@ -1,7 +1,7 @@
 'use strict';
 
 import { redBright, bold, yellow } from 'colorette';
-import { error, info, warning } from './figures';
+import { error, info, warning } from './logger';
 
 export const NOT_GIT_REPO = redBright(`${error} Current directory is not a git directory!`);
 
