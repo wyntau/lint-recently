@@ -5,12 +5,10 @@
 import { Listr } from 'listr2';
 import debugLib from 'debug';
 
-import { chunkFiles } from './chunkFiles';
-
 import { execGit, resolveGitRepo } from './git';
 import { generateTasks, makeCmdTasks } from './task';
 import { getRenderer } from './renderer';
-import { getRecentlyFiles } from './file';
+import { getRecentlyFiles, chunkFiles } from './file';
 import { FAILED_GET_RECENTLY_FILES, NOT_GIT_REPO, NO_RECENTLY_FILES, NO_TASKS } from './messages';
 import { getInitialState, IContext } from './context';
 import { GitRepoError, GetStagedFilesError } from './symbols';
