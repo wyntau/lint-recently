@@ -22,14 +22,7 @@ const {
 } = require('./messages')
 const resolveGitRepo = require('./resolveGitRepo')
 const {
-  applyModificationsSkipped,
-  cleanupEnabled,
-  cleanupSkipped,
   getInitialState,
-  hasPartiallyStagedFiles,
-  restoreOriginalStateEnabled,
-  restoreOriginalStateSkipped,
-  restoreUnstagedChangesSkipped,
 } = require('./state')
 const { GitRepoError, GetStagedFilesError, GitError } = require('./symbols')
 
