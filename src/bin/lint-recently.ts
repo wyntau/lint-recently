@@ -5,7 +5,7 @@ import cmdline from 'commander';
 import debugLib from 'debug';
 import pleaseUpgradeNode from 'please-upgrade-node';
 
-import lintRecently from '../lib';
+import { lintRecently } from '../lib';
 
 // Force colors for packages that depend on https://www.npmjs.com/package/supports-color
 if (supportsColor.stdout) {
