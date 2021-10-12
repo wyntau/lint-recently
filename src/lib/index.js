@@ -67,16 +67,7 @@ const lintRecently = async (
   // resolved.config is the parsed configuration object
   // resolved.filepath is the path to the config file that was found
   const config = validateConfig(resolved.config, logger)
-
-  if (debug) {
-    // Log using logger to be able to test through `consolemock`.
-    logger.log('Running lint-recently with the following config:')
-    logger.log(stringifyObject(config, { indent: '  ' }))
-  } else {
-    // We might not be in debug mode but `DEBUG=lint-recently*` could have
-    // been set.
-    debugLog('lint-recently config:\n%O', config)
-  }
+  debugLog('lint-recently config:\n%O', config)
 
   // Unset GIT_LITERAL_PATHSPECS to not mess with path interpretation
   debugLog('Unset GIT_LITERAL_PATHSPECS (was `%s`)', process.env.GIT_LITERAL_PATHSPECS)

@@ -24,9 +24,9 @@ const incorrectBraces = (before, after) =>
 `
   )
 
-const NO_STAGED_FILES = `${info} No staged files found.`
+const NO_STAGED_FILES = `${info} No recently files found.`
 
-const NO_TASKS = `${info} No staged files match any configured task.`
+const NO_TASKS = `${info} No recently files match any configured task.`
 
 const TASK_ERROR = 'Skipped because of errors from tasks.'
 
