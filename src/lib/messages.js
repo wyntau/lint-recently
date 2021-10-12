@@ -16,7 +16,7 @@ const configurationError = (opt, helpMsg, value) =>
 
 const NOT_GIT_REPO = redBright(`${error} Current directory is not a git directory!`)
 
-const FAILED_GET_STAGED_FILES = redBright(`${error} Failed to get staged files!`)
+const FAILED_GET_RECENTLY_FILES = redBright(`${error} Failed to get recently files!`)
 
 const incorrectBraces = (before, after) =>
   yellow(
@@ -43,7 +43,7 @@ const CONFIG_STDIN_ERROR = 'Error: Could not read config from stdin.'
 module.exports = {
   CONFIG_STDIN_ERROR,
   configurationError,
-  FAILED_GET_STAGED_FILES,
+  FAILED_GET_RECENTLY_FILES,
   incorrectBraces,
   invalidOption,
   NO_STAGED_FILES,

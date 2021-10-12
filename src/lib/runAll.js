@@ -9,10 +9,10 @@ const debugLog = require('debug')('lint-recently:run')
 const execGit = require('./execGit')
 const generateTasks = require('./generateTasks')
 const { getRenderer } = require('./renderer')
-const getStagedFiles = require('./getStagedFiles')
+const getRecentlyFiles = require('./getRecentlyFiles')
 const makeCmdTasks = require('./makeCmdTasks')
 const {
-  FAILED_GET_STAGED_FILES,
+  FAILED_GET_RECENTLY_FILES,
   NOT_GIT_REPO,
   NO_STAGED_FILES,
   NO_TASKS,
@@ -80,10 +80,10 @@ const runAll = async (
     return ctx
   }
 
-  const files = await getStagedFiles({ cwd: gitDir })
+  const files = await getRecentlyFiles({ cwd: gitDir })
   if (!files) {
     if (!quiet) {
-      ctx.output.push(FAILED_GET_STAGED_FILES)
+      ctx.output.push(FAILED_GET_RECENTLY_FILES)
     }
     ctx.errors.add(GetStagedFilesError)
     throw createError(ctx)
