@@ -8,7 +8,7 @@ export interface IGetInitialStateParams {
   quiet?: boolean;
 }
 
-export function getInitialState(params: IGetInitialStateParams): IContext {
+export function getInitialState(params: IGetInitialStateParams = {}): IContext {
   return {
     errors: new Set([]),
     output: [],

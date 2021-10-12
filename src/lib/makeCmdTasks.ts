@@ -1,6 +1,6 @@
 import cliTruncate from 'cli-truncate';
 import debugLib from 'debug';
-import resolveTaskFn from './resolveTaskFn';
+import { resolveTaskFn } from './resolveTaskFn';
 
 const debug = debugLib('lint-recently:make-cmd-tasks');
 const STDOUT_COLUMNS_DEFAULT = 80;
