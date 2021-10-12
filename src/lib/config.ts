@@ -83,7 +83,7 @@ ${message}`);
 
   if (errors.length) {
     const message = errors.join('\n\n');
-    logger.error(`Could not parse lint-staged config.
+    logger.error(`Could not parse lint-recently config.
 ${message}`);
     throw new Error(message);
   }

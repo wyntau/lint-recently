@@ -7,7 +7,7 @@ import { getRenderer } from './renderer';
 import { getRecentlyFiles, chunkFiles } from './file';
 import { FAILED_GET_RECENTLY_FILES, NOT_GIT_REPO, NO_RECENTLY_FILES, NO_TASKS } from './messages';
 import { getInitialState, IContext } from './context';
-import { GitRepoError, GetStagedFilesError } from './symbols';
+import { GitRepoError, GetRecentlyFilesError } from './symbols';
 import { IConfig } from './config';
 
 const debugLog = debugLib('lint-recently:run');
@@ -69,10 +69,10 @@ export async function runAll(options: IRunAllOptions, logger = console) {
     if (!quiet) {
       ctx.output.push(FAILED_GET_RECENTLY_FILES);
     }
-    ctx.errors.add(GetStagedFilesError);
+    ctx.errors.add(GetRecentlyFilesError);
     throw createError(ctx);
   }
-  debugLog('Loaded list of staged files in git:\n%O', files);
+  debugLog('Loaded list of recently files in git:\n%O', files);
 
   // If there are no files avoid executing any lint-recently logic
   if (files.length === 0) {
@@ -82,10 +82,10 @@ export async function runAll(options: IRunAllOptions, logger = console) {
     return ctx;
   }
 
-  const stagedFileChunks = chunkFiles({ baseDir: gitDir, files, maxArgLength, relative });
-  const chunkCount = stagedFileChunks.length;
+  const recentlyFileChunks = chunkFiles({ baseDir: gitDir, files, maxArgLength, relative });
+  const chunkCount = recentlyFileChunks.length;
   if (chunkCount > 1) {
-    debugLog(`Chunked staged files into ${chunkCount} part`, chunkCount);
+    debugLog(`Chunked recently files into ${chunkCount} part`, chunkCount);
   }
 
   const listrOptions = {
@@ -98,7 +98,7 @@ export async function runAll(options: IRunAllOptions, logger = console) {
 
   const listrTasks = [];
 
-  for (const [index, files] of stagedFileChunks.entries()) {
+  for (const [index, files] of recentlyFileChunks.entries()) {
     const chunkTasks = generateTasks({ patterns: config.patterns, cwd, gitDir, files, relative });
     const chunkListrTasks: Array<Record<string, any>> = [];
 
@@ -125,7 +125,7 @@ export async function runAll(options: IRunAllOptions, logger = console) {
         skip: () => {
           // Skip task when no files matched
           if (task.fileList.length === 0) {
-            return `No staged files match ${task.pattern}`;
+            return `No recently files match ${task.pattern}`;
           }
           return false;
         },
