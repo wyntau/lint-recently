@@ -13,7 +13,7 @@ import { getRenderer } from './renderer';
 import { getRecentlyFiles } from './file';
 import { makeCmdTasks } from './makeCmdTasks';
 import { FAILED_GET_RECENTLY_FILES, NOT_GIT_REPO, NO_RECENTLY_FILES, NO_TASKS } from './messages';
-import resolveGitRepo from './resolveGitRepo';
+import { resolveGitRepo } from './resolveGitRepo';
 import { getInitialState, IContext } from './context';
 import { GitRepoError, GetStagedFilesError } from './symbols';
 import { IConfig } from './config';
