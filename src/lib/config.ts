@@ -49,7 +49,7 @@ function resolveConfig(configPath: string) {
   }
 }
 
-export function loadConfig(configPath: string) {
+export function loadConfig(configPath?: string) {
   const explorer = cosmiconfig('lint-recently', {
     searchPlaces: ['.lintrecentlyrc.json', '.lintrecentlyrc.js', 'package.json'],
   });

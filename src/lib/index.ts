@@ -40,7 +40,7 @@ export async function lintRecently(options: ILintRecentlyOptions = {}, logger = 
 
   debugLog('Loading config using `cosmiconfig`');
 
-  const resolved = configObject ? { config: configObject, filepath: '(input)' } : await loadConfig(configPath!);
+  const resolved = configObject ? { config: configObject, filepath: '(input)' } : await loadConfig(configPath);
 
   if (resolved == null) {
     logger.error(`${ConfigNotFoundError.message}.`);

@@ -28,3 +28,5 @@ export const invalidOption = (name: string, value: string, message: string) => `
   ${message}
 
 See https://github.com/okonet/lint-recently#command-line-flags`;
+
+export const CONFIG_STDIN_ERROR = 'Error: Could not read config from stdin.';
