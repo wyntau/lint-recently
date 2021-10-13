@@ -2,9 +2,10 @@
 Like lint-staged, but run linters against recently modified git files by times
 
 ## Why
-These days more and more projects are constructed as `monorepo`, so run eslint or stylelint or something else on full project spend long time again and again.
+These days more and more projects are constructed as `monorepo`, and some `non-monorepo` projects are really big.
+so run lint on the full project spend very long time again and again.
 
-Yes, we can use lint-staged before git commit, but git hooks can be skipped. So many bad code can still be in your codebase.
+Yes, we can use lint-staged before git commit to lint files partically, but git hooks can be skipped. So many bad code can still be in your codebase.
 
 Then we can run lint-recently in CI/CD, and find out if someone bad guys skip the git hooks and pollute our codebase.
 
