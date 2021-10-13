@@ -36,13 +36,13 @@ configuration will be loaded in these files in order.
 - `lint-recently` object in package.json
 
 Options supported are list below
-- `days`, how long we will find all modified files
+- `days`, integer, we will use `git diff` between the latest commit and 3 days ago's commit to find all modified files
 - `patterns`, like lint-staged options in `.lintstagedrc.json`. Object should be an object where each value is a command to run and its key is a glob pattern to use for this command
 
 `.lintrecentlyrc.json` example
-```jsonc
+```json
 {
-  "days": 3, // from the latest commits' create time to 3 days ago, all modified files will be linted
+  "days": 3,
   "patterns": {
     "*.{ts,tsx,js,jsx}": ["eslint"]
   }
