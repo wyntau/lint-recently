@@ -36,12 +36,13 @@ configuration will be loaded in these files in order.
 - `lint-recently` object in package.json
 
 Options supported are list below
-- `days`, integer, we will use `git diff` between the latest commit and 3 days ago's commit to find all modified files
-- `patterns`, like lint-staged options in `.lintstagedrc.json`. Object should be an object where each value is a command to run and its key is a glob pattern to use for this command
+- `days`, integer, we will use `git diff` between the latest commit and `${days}` days ago's commit to find all modified files. Default to 3.
+- `patterns`, like lint-staged options in `.lintstagedrc.json`. Patterns should be an object where each value is a command to run and its key is a glob pattern to use for this command
 
 `.lintrecentlyrc.json` example
 ```json
 {
+  "$schema": "./node_modules/lint-recently/dist/lib/schema.json",
   "days": 3,
   "patterns": {
     "*.{ts,tsx,js,jsx}": ["eslint"]

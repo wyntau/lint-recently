@@ -5,7 +5,7 @@
   "type": "object",
   "properties": {
     "days": {
-      "description": "we will use `git diff` between the latest commit and `X` days ago's commit to find all modified files",
+      "description": "we will use `git diff` between the latest commit and ${days} days ago's commit to find all modified files. Default to 3.",
       "type": "number",
       "minimum": 1
     },
