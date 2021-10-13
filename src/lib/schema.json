@@ -5,10 +5,12 @@
   "type": "object",
   "properties": {
     "days": {
+      "description": "we will use `git diff` between the latest commit and `X` days ago's commit to find all modified files",
       "type": "number",
       "minimum": 1
     },
     "patterns": {
+      "description": "patterns should be an object where each value is a command to run and its key is a glob pattern to use for this command",
       "type": "object",
       "additionalProperties": {
         "oneOf": [
