@@ -4,38 +4,10 @@ import { validateBraces } from './validator';
 import Ajv from 'ajv';
 import { ILogger } from './logger';
 
+const configSchema = require('./schema.json'); // eslint-disable-line
+
 const ajv = new Ajv();
 const debug = debugLib('lint-recently:cfg');
-
-const configSchema = {
-  $schema: 'http://json-schema.org/draft-07/schema',
-  $id: 'configSchema',
-  title: 'lint-recently config',
-  type: 'object',
-  properties: {
-    days: {
-      type: 'number',
-      minimum: 1,
-    },
-    patterns: {
-      type: 'object',
-      additionalProperties: {
-        oneOf: [
-          {
-            type: 'string',
-          },
-          {
-            type: 'array',
-            items: {
-              type: 'string',
-            },
-          },
-        ],
-      },
-    },
-  },
-  required: ['patterns'],
-};
 
 export interface IConfig {
   days?: number;
