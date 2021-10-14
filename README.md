@@ -1,5 +1,5 @@
 # lint-recently
-Like lint-staged, but run linters against recently modified git files by times
+Like lint-staged, but run linters against recently modified git files by times.
 
 ## Why
 These days more and more projects are constructed as `monorepo`, and some `non-monorepo` projects are really big.
@@ -53,7 +53,7 @@ Options supported are list below
 ```
 
 ## Thanks
-Thanks to [lint-staged](https://github.com/okonet/lint-staged) specially. The project was heavily inspired by lint-staged, and many code was directly borrowed from lint-staged.
+Special thanks to [lint-staged](https://github.com/okonet/lint-staged). The project was heavily inspired by lint-staged, and many code was directly borrowed from lint-staged.
 
 ## License
 MIT
