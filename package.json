@@ -1,6 +1,6 @@
 {
   "name": "lint-recently",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "lint recently git commited files",
   "main": "./dist/lib/index.js",
   "bin": "./dist/bin/lint-recently.js",
