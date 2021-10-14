@@ -30,9 +30,9 @@
     chalk "^2.0.0"
     js-tokens "^4.0.0"
 
-"@commitlint/cli@^13.2.1":
+"@commitlint/cli@13.2.1":
   version "13.2.1"
-  resolved "https://registry.npmmirror.com/@commitlint/cli/download/@commitlint/cli-13.2.1.tgz#80ebd46beef6ceed3bb0c0842bcda8d02a3c91de"
+  resolved "https://registry.npmmirror.com/@commitlint/cli/download/@commitlint/cli-13.2.1.tgz?cache=0&sync_timestamp=1634177273693&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40commitlint%2Fcli%2Fdownload%2F%40commitlint%2Fcli-13.2.1.tgz#80ebd46beef6ceed3bb0c0842bcda8d02a3c91de"
   integrity sha1-gOvUa+72zu07sMCEK82o0Co8kd4=
   dependencies:
     "@commitlint/format" "^13.2.0"
@@ -45,7 +45,7 @@
     resolve-global "1.0.0"
     yargs "^17.0.0"
 
-"@commitlint/config-conventional@^13.2.0":
+"@commitlint/config-conventional@13.2.0":
   version "13.2.0"
   resolved "https://registry.npmmirror.com/@commitlint/config-conventional/download/@commitlint/config-conventional-13.2.0.tgz#2ad24fecc56ae9619dbe0934b98a98b18ace0bec"
   integrity sha1-KtJP7MVq6WGdvgk0uYqYsYrOC+w=
@@ -235,7 +235,7 @@
   resolved "https://registry.npmmirror.com/@types/braces/download/@types/braces-3.0.1.tgz#5a284d193cfc61abb2e5a50d36ebbc50d942a32b"
   integrity sha1-WihNGTz8Yauy5aUNNuu8UNlCoys=
 
-"@types/debug@^4.1.7":
+"@types/debug@4.1.7":
   version "4.1.7"
   resolved "https://registry.npmmirror.com/@types/debug/download/@types/debug-4.1.7.tgz#7cc0ea761509124709b8b2d1090d8f6c17aadb82"
   integrity sha1-fMDqdhUJEkcJuLLRCQ2PbBeq24I=
@@ -247,7 +247,7 @@
   resolved "https://registry.npmmirror.com/@types/json-schema/download/@types/json-schema-7.0.9.tgz?cache=0&sync_timestamp=1632763827525&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fjson-schema%2Fdownload%2F%40types%2Fjson-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
   integrity sha1-l+3JA36gw4WFMgsolk3eOznkZg0=
 
-"@types/micromatch@^4.0.2":
+"@types/micromatch@4.0.2":
   version "4.0.2"
   resolved "https://registry.npmmirror.com/@types/micromatch/download/@types/micromatch-4.0.2.tgz#ce29c8b166a73bf980a5727b1e4a4d099965151d"
   integrity sha1-zinIsWanO/mApXJ7HkpNCZllFR0=
@@ -264,7 +264,7 @@
   resolved "https://registry.npmmirror.com/@types/ms/download/@types/ms-0.7.31.tgz#31b7ca6407128a3d2bbc27fe2d21b345397f6197"
   integrity sha1-MbfKZAcSij0rvCf+LSGzRTl/YZc=
 
-"@types/node@^16.10.3":
+"@types/node@16.10.3":
   version "16.10.3"
   resolved "https://registry.npmmirror.com/@types/node/download/@types/node-16.10.3.tgz#7a8f2838603ea314d1d22bb3171d899e15c57bd5"
   integrity sha1-eo8oOGA+oxTR0iuzFx2JnhXFe9U=
@@ -274,7 +274,7 @@
   resolved "https://registry.npmmirror.com/@types/normalize-package-data/download/@types/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha1-0zV0eaD9/dWQf+Z+F+CoXJBuEwE=
 
-"@types/normalize-path@^3.0.0":
+"@types/normalize-path@3.0.0":
   version "3.0.0"
   resolved "https://registry.npmmirror.com/@types/normalize-path/download/@types/normalize-path-3.0.0.tgz#bb5c46cab77b93350b4cf8d7ff1153f47189ae31"
   integrity sha1-u1xGyrd7kzULTPjX/xFT9HGJrjE=
@@ -284,7 +284,7 @@
   resolved "https://registry.npmmirror.com/@types/parse-json/download/@types/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha1-L4u0QUNNFjs1+4/9zNcTiSf/uMA=
 
-"@types/supports-color@^8.1.1":
+"@types/supports-color@8.1.1":
   version "8.1.1"
   resolved "https://registry.npmmirror.com/@types/supports-color/download/@types/supports-color-8.1.1.tgz#1b44b1b096479273adf7f93c75fc4ecc40a61ee4"
   integrity sha1-G0SxsJZHknOt9/k8dfxOzECmHuQ=
@@ -1127,9 +1127,9 @@ human-signals@^2.1.0:
   resolved "https://registry.npmmirror.com/human-signals/download/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha1-3JH8ukLk0G5Kuu0zs+ejwC9RTqA=
 
-husky@^7.0.2:
+husky@7.0.2:
   version "7.0.2"
-  resolved "https://registry.npmmirror.com/husky/download/husky-7.0.2.tgz?cache=0&sync_timestamp=1632754005849&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fhusky%2Fdownload%2Fhusky-7.0.2.tgz#21900da0f30199acca43a46c043c4ad84ae88dff"
+  resolved "https://registry.npmmirror.com/husky/download/husky-7.0.2.tgz#21900da0f30199acca43a46c043c4ad84ae88dff"
   integrity sha1-IZANoPMBmazKQ6RsBDxK2Erojf8=
 
 ignore@^4.0.6:
@@ -1314,7 +1314,7 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.npmmirror.com/lines-and-columns/download/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
-lint-staged@^11.2.3:
+lint-staged@11.2.3:
   version "11.2.3"
   resolved "https://registry.npmmirror.com/lint-staged/download/lint-staged-11.2.3.tgz#fc3f4569cc4f46553309dfc1447b8aef69f744fb"
   integrity sha1-/D9FacxPRlUzCd/BRHuK72n3RPs=
