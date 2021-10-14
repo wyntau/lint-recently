@@ -56,9 +56,6 @@
     "lint": "npm run eslint",
     "test": "npm run prepublishOnly && npx . --debug"
   },
-  "engines": {
-    "npm": "use-yarn-please"
-  },
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org"
