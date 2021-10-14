@@ -1,3 +1,22 @@
 {
-  "extends": ["config:base"]
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "pinVersions": false,
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "eslint",
+        "eslint-config-prettier",
+        "eslint-plugin-prettier",
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser",
+        "prettier"
+      ],
+      "groupName": "eslint"
+    },
+    {
+      "matchPackageNames": ["typescript", "tslib"],
+      "groupName": "typescript"
+    }
+  ]
 }
