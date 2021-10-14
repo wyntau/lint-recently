@@ -53,6 +53,7 @@
     "watch": "tsc -w",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build",
+    "lint": "npm run eslint",
     "test": "npm run prepublishOnly && npx . --debug"
   },
   "engines": {
