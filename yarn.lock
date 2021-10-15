@@ -385,6 +385,14 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+aggregate-error@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmmirror.com/aggregate-error/download/aggregate-error-4.0.0.tgz#83dbdb53a0d500721281d22e19eee9bc352a89cd"
+  integrity sha1-g9vbU6DVAHISgdIuGe7pvDUqic0=
+  dependencies:
+    clean-stack "^4.0.0"
+    indent-string "^5.0.0"
+
 ajv@^6.10.0, ajv@^6.12.4:
   version "6.12.6"
   resolved "https://registry.npmmirror.com/ajv/download/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
@@ -533,6 +541,13 @@ clean-stack@^2.0.0:
   version "2.2.0"
   resolved "https://registry.npmmirror.com/clean-stack/download/clean-stack-2.2.0.tgz#ee8472dbb129e727b31e8a10a427dee9dfe4008b"
   integrity sha1-7oRy27Ep5yezHooQpCfe6d/kAIs=
+
+clean-stack@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.npmmirror.com/clean-stack/download/clean-stack-4.1.0.tgz#5ce5a2fd19a12aecdce8570daefddb7ac94b6b4e"
+  integrity sha1-XOWi/RmhKuzc6FcNrv3beslLa04=
+  dependencies:
+    escape-string-regexp "5.0.0"
 
 cli-cursor@^3.1.0:
   version "3.1.0"
@@ -748,6 +763,11 @@ escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.npmmirror.com/escalade/download/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
   integrity sha1-2M/ccACWXFoBdLSoLqpcBVJ0LkA=
+
+escape-string-regexp@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmmirror.com/escape-string-regexp/download/escape-string-regexp-5.0.0.tgz#4683126b500b61762f2dbebace1806e8be31b1c8"
+  integrity sha1-RoMSa1ALYXYvLb66zhgG6L4xscg=
 
 escape-string-regexp@^1.0.5:
   version "1.0.5"
@@ -1159,6 +1179,11 @@ indent-string@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmmirror.com/indent-string/download/indent-string-4.0.0.tgz#624f8f4497d619b2d9768531d58f4122854d7251"
   integrity sha1-Yk+PRJfWGbLZdoUx1Y9BIoVNclE=
+
+indent-string@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.npmmirror.com/indent-string/download/indent-string-5.0.0.tgz#4fd2980fccaf8622d14c64d694f4cf33c81951a5"
+  integrity sha1-T9KYD8yvhiLRTGTWlPTPM8gZUaU=
 
 inflight@^1.0.4:
   version "1.0.6"
@@ -1575,7 +1600,14 @@ p-locate@^5.0.0:
   dependencies:
     p-limit "^3.0.2"
 
-p-map@4.x, p-map@^4.0.0:
+p-map@5.x:
+  version "5.1.0"
+  resolved "https://registry.npmmirror.com/p-map/download/p-map-5.1.0.tgz?cache=0&sync_timestamp=1632757099323&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fp-map%2Fdownload%2Fp-map-5.1.0.tgz#1c31bdfc492910098bdb4e63d099efbdd9b37755"
+  integrity sha1-HDG9/EkpEAmL205j0Jnvvdmzd1U=
+  dependencies:
+    aggregate-error "^4.0.0"
+
+p-map@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmmirror.com/p-map/download/p-map-4.0.0.tgz#bb2f95a5eda2ec168ec9274e06a747c3e2904d2b"
   integrity sha1-uy+Vpe2i7BaOySdOBqdHw+KQTSs=
