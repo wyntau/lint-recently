@@ -1,4 +1,4 @@
-import { Listr } from 'listr2';
+import { Listr, ListrTask } from 'listr2';
 import debugLib from 'debug';
 
 import { execGit, resolveGitRepo } from './git';
@@ -96,11 +96,11 @@ export async function runAll(options: IRunAllOptions, logger = console) {
     ...getRenderer({ debug, quiet }),
   };
 
-  const listrTasks = [];
+  const listrTasks: Array<ListrTask<IContext>> = [];
 
   for (const [index, files] of recentlyFileChunks.entries()) {
     const chunkTasks = generateTasks({ patterns: config.patterns, cwd, gitDir, files, relative });
-    const chunkListrTasks: Array<Record<string, any>> = [];
+    const chunkListrTasks: Array<ListrTask> = [];
 
     for (const task of chunkTasks) {
       const subTasks = await makeCmdTasks({
@@ -135,10 +135,10 @@ export async function runAll(options: IRunAllOptions, logger = console) {
     listrTasks.push({
       // No need to show number of task chunks when there's only one
       title: chunkCount > 1 ? `Running tasks (chunk ${index + 1}/${chunkCount})...` : 'Running tasks...',
-      task: () => new Listr(chunkListrTasks as any, { ...listrOptions, concurrent } as any),
-      skip: () => {
+      task: () => new Listr(chunkListrTasks, { ...listrOptions, concurrent } as any),
+      skip: (ctx) => {
         // Skip chunk when no every task is skipped (due to no matches)
-        if (chunkListrTasks.every((task) => task.skip())) {
+        if (chunkListrTasks.every((task) => (typeof task.skip === 'function' ? task.skip(ctx) : !!task.skip))) {
           return 'No tasks to run.';
         }
         return false;
@@ -148,7 +148,7 @@ export async function runAll(options: IRunAllOptions, logger = console) {
 
   // If all of the configured tasks should be skipped
   // avoid executing any lint-recently logic
-  if (listrTasks.every((task) => task.skip())) {
+  if (listrTasks.every((task) => (typeof task.skip === 'function' ? task.skip(ctx) : !!task.skip))) {
     if (!quiet) {
       ctx.output.push(NO_TASKS);
     }
