@@ -28,9 +28,9 @@ export const readFile = async (filename: string, ignoreENOENT = true) => {
   }
 };
 
-async function getLatestCommitDate(path: string, gitDateFormat = '%Y-%m-%d_%H:%M:%S'): Promise<string> {
+async function getLatestCommitDate(path: string): Promise<string> {
   try {
-    return await execGit(['log', '-1', `--date=format:${gitDateFormat}`, `--pretty=format:%cd`, path]);
+    return await execGit(['log', '-1', `--date=iso8601`, `--pretty=format:%cd`, path]);
   } catch {
     return '';
   }
@@ -42,10 +42,8 @@ export interface IGetRecentlyFilesOptions extends execa.Options {
 export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
   debug('getRecentFiles with options: %O', options);
 
-  const dayjsFormat = 'YYYY-MM-DD_HH:mm:ss';
-  const gitFormat = '%Y-%m-%d_%H:%M:%S';
-
-  const commitDateLatest = await getLatestCommitDate('HEAD', gitFormat);
+  const dayjsFormat = 'YYYY-MM-DD HH:mm:ss ZZ';
+  const commitDateLatest = await getLatestCommitDate('HEAD');
 
   // empty git history
   if (!commitDateLatest) {
@@ -60,7 +58,7 @@ export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
     'log',
     '-1',
     '--date-order',
-    `--before=${commitDateBefore}`,
+    `--before='${commitDateBefore}'`,
     '--pretty=format:%H',
   ]);
 
@@ -80,7 +78,7 @@ export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
   //#region sort files by latest commited datetime
   const lines = await pMap(
     linesRaw,
-    (file) => getLatestCommitDate(file, gitFormat).then<[string, string]>((date) => [date, file]),
+    (file) => getLatestCommitDate(file).then<[string, string]>((date) => [date, file]),
     { concurrency: 5 }
   );
   lines.sort((a, b) => (a[0] >= b[0] ? -1 : 1));
