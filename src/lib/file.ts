@@ -7,7 +7,7 @@ import { execGit } from './git';
 import execa from 'execa';
 import normalize from 'normalize-path';
 import { resolve } from 'path';
-import pLimit from 'p-limit';
+import pMap from 'p-map';
 
 dayjs.extend(customParseFormat);
 
@@ -78,14 +78,13 @@ export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
   const linesRaw = linesStr ? linesStr.replace(/\u0000$/, '').split('\u0000') : [];
 
   //#region sort files by latest commited datetime
-  const limit = pLimit(5);
-  const lines = await Promise.all(
-    linesRaw.map((file) =>
-      limit(() => getLatestCommitDate(file, gitFormat).then<[string, string]>((date) => [date, file]))
-    )
+  const lines = await pMap(
+    linesRaw,
+    (file) => getLatestCommitDate(file, gitFormat).then<[string, string]>((date) => [date, file]),
+    { concurrency: 5 }
   );
   lines.sort((a, b) => (a[0] >= b[0] ? -1 : 1));
-  debug('concurrency loaded recently files list:\n%O', lines);
+  debug('concurrency loaded recently files list: %O', lines);
   //#endregion
 
   return lines.map((item) => item[1]);

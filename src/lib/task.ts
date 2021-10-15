@@ -53,7 +53,7 @@ export function generateTasks(options: IGenerateTasksOptions) {
     const fileList = matches.map((file) => normalize(relative ? file : path.resolve(cwd, file)));
 
     const task = { pattern, commands, fileList };
-    debug('Generated task: \n%O', task);
+    debug('Generated task: %O', task);
 
     return task;
   });

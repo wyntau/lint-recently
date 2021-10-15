@@ -47,12 +47,12 @@ export async function lintRecently(options: ILintRecentlyOptions = {}, logger = 
     throw ConfigNotFoundError;
   }
 
-  debugLog('Successfully loaded config from `%s`:\n%O', resolved.filepath, resolved.config);
+  debugLog('Successfully loaded config from `%s`: %O', resolved.filepath, resolved.config);
 
   // resolved.config is the parsed configuration object
   // resolved.filepath is the path to the config file that was found
   const config = validateConfig(resolved.config, logger);
-  debugLog('lint-recently config:\n%O', config);
+  debugLog('lint-recently config: %O', config);
 
   // Unset GIT_LITERAL_PATHSPECS to not mess with path interpretation
   debugLog('Unset GIT_LITERAL_PATHSPECS (was `%s`)', process.env.GIT_LITERAL_PATHSPECS);

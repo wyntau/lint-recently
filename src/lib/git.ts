@@ -15,7 +15,7 @@ const GIT_GLOBAL_OPTIONS = [...NO_SUBMODULE_RECURSE];
 
 export type IExecGitOptions = execa.Options;
 export async function execGit(cmd: Array<string>, options: IExecGitOptions = {}) {
-  debug('Running git command: %O', cmd);
+  debug('Running git command: %o', cmd);
   try {
     const { stdout } = await execa('git', GIT_GLOBAL_OPTIONS.concat(cmd), {
       ...options,
