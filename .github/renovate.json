@@ -6,5 +6,11 @@
     "github>wyntau/renovate-config:eslint+prettier",
     "github>wyntau/renovate-config:typescript"
   ],
-  "ignoreDeps": ["p-map", "cli-truncate", "supports-color"]
+  "packageRules": [
+    {
+      "matchPackageNames": ["p-map", "cli-truncate", "supports-color"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    }
+  ]
 }
