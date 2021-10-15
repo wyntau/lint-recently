@@ -72,7 +72,6 @@ export async function runAll(options: IRunAllOptions, logger = console) {
     ctx.errors.add(GetRecentlyFilesError);
     throw createError(ctx);
   }
-  debugLog('Loaded list of recently files in git:\n%O', files);
 
   // If there are no files avoid executing any lint-recently logic
   if (files.length === 0) {

@@ -7,6 +7,7 @@ import { execGit } from './git';
 import execa from 'execa';
 import normalize from 'normalize-path';
 import { resolve } from 'path';
+import pLimit from 'p-limit';
 
 dayjs.extend(customParseFormat);
 
@@ -27,6 +28,14 @@ export const readFile = async (filename: string, ignoreENOENT = true) => {
   }
 };
 
+async function getLatestCommitDate(path: string, gitDateFormat = '%Y-%m-%d_%H:%M:%S'): Promise<string> {
+  try {
+    return await execGit(['log', '-1', `--date=format:${gitDateFormat}`, `--pretty=format:%cd`, path]);
+  } catch {
+    return '';
+  }
+}
+
 export interface IGetRecentlyFilesOptions extends execa.Options {
   days?: number;
 }
@@ -36,7 +45,7 @@ export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
   const dayjsFormat = 'YYYY-MM-DD_HH:mm:ss';
   const gitFormat = '%Y-%m-%d_%H:%M:%S';
 
-  const commitDateLatest = await execGit(['log', '-1', `--date=format:${gitFormat}`, `--pretty=format:%cd`, 'HEAD']);
+  const commitDateLatest = await getLatestCommitDate('HEAD', gitFormat);
 
   // empty git history
   if (!commitDateLatest) {
@@ -59,13 +68,27 @@ export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
     commitHashBefore = await execGit(['rev-list', '--max-parents=0', 'HEAD']);
   }
 
-  const lines = await execGit(
+  const linesStr = await execGit(
     ['--no-pager', 'diff', '--diff-filter=ACMR', '--name-only', '-z', commitHashBefore, commitHashLatest],
     options
   );
+
   // With `-z`, git prints `fileA\u0000fileB\u0000fileC\u0000` so we need to remove the last occurrence of `\u0000` before splitting
   // eslint-disable-next-line no-control-regex
-  return lines ? lines.replace(/\u0000$/, '').split('\u0000') : [];
+  const linesRaw = linesStr ? linesStr.replace(/\u0000$/, '').split('\u0000') : [];
+
+  //#region sort files by latest commited datetime
+  const limit = pLimit(5);
+  const lines = await Promise.all(
+    linesRaw.map((file) =>
+      limit(() => getLatestCommitDate(file, gitFormat).then<[string, string]>((date) => [date, file]))
+    )
+  );
+  lines.sort((a, b) => (a[0] >= b[0] ? -1 : 1));
+  debug('concurrency loaded recently files list:\n%O', lines);
+  //#endregion
+
+  return lines.map((item) => item[1]);
 }
 
 function chunkArray(arr: Array<string>, chunkCount: number) {
