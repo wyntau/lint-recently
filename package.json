@@ -5,7 +5,7 @@
   "main": "./dist/lib/index.js",
   "bin": "./dist/bin/lint-recently.js",
   "files": [
-    "dist"
+    "/dist"
   ],
   "repository": "git@github.com:wyntau/lint-recently.git",
   "author": "wyntau <wyntau@outlook.com>",
