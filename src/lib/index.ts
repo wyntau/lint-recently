@@ -3,7 +3,7 @@ import { printTaskOutput } from './logger';
 import { runAll } from './runAll';
 import { ConfigNotFoundError } from './symbols';
 import { IConfig, validateConfig } from './config';
-import { validateOptions } from './validator';
+import { validateShell } from './validator';
 
 import { loadConfig } from './config';
 
@@ -36,7 +36,7 @@ export async function lintRecently(options: ILintRecentlyOptions = {}, logger = 
     verbose = false,
   } = options;
 
-  await validateOptions({ shell }, logger);
+  await validateShell({ shell }, logger);
 
   debugLog('Loading config using `cosmiconfig`');
 

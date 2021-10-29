@@ -7,8 +7,11 @@ import { ILogger } from './logger';
 
 const debug = debugLib('lint-recently:options');
 
-export async function validateOptions(options: Record<string, any> = {}, logger: ILogger) {
-  debug('Validating options...');
+export interface IValidateShellOptions {
+  shell?: string | boolean;
+}
+export async function validateShell(options: IValidateShellOptions = {}, logger: ILogger) {
+  debug('Validating shell...');
 
   /** Ensure the passed shell option is executable */
   if (typeof options.shell === 'string') {
@@ -20,7 +23,7 @@ export async function validateOptions(options: Record<string, any> = {}, logger:
     }
   }
 
-  debug('Validated options!');
+  debug('Validated shell!');
 }
 
 /**
