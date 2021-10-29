@@ -67,7 +67,7 @@ const withoutIncorrectBraces = (pattern: string) => {
   return output;
 };
 
-export function validateBraces(pattern: string, logger: ILogger) {
+export function validateAndFixBraces(pattern: string, logger: ILogger) {
   const fixedPattern = withoutIncorrectBraces(pattern);
 
   if (fixedPattern !== pattern) {
