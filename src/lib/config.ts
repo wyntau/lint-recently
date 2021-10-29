@@ -1,6 +1,6 @@
 import { cosmiconfig } from 'cosmiconfig';
 import debugLib from 'debug';
-import { validateBraces } from './validator';
+import { validateAndFixBraces } from './validator';
 import Ajv from 'ajv';
 import { ILogger } from './logger';
 import configSchema from './schema.json';
@@ -49,7 +49,7 @@ ${message}`);
      * A typical configuration error is using invalid brace expansion, like `*.{js}`.
      * These are automatically fixed and warned about.
      */
-    const fixedPattern = validateBraces(pattern, logger);
+    const fixedPattern = validateAndFixBraces(pattern, logger);
 
     return { ...collection, [fixedPattern]: task };
   }, {});
