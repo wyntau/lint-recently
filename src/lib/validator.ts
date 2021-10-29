@@ -11,19 +11,17 @@ export interface IValidateShellOptions {
   shell?: string | boolean;
 }
 export async function validateShell(options: IValidateShellOptions = {}, logger: ILogger) {
-  debug('Validating shell...');
-
   /** Ensure the passed shell option is executable */
   if (typeof options.shell === 'string') {
+    debug('Validating shell...');
     try {
       await fs.access(options.shell, constants.X_OK);
     } catch (error: any) {
       logger.error(invalidOption('shell', options.shell, error.message));
       throw InvalidOptionsError;
     }
+    debug('Validated shell!');
   }
-
-  debug('Validated shell!');
 }
 
 /**
