@@ -3,8 +3,7 @@ import debugLib from 'debug';
 import { validateBraces } from './validator';
 import Ajv from 'ajv';
 import { ILogger } from './logger';
-
-const configSchema = require('./schema.json'); // eslint-disable-line
+import configSchema from './schema.json';
 
 const ajv = new Ajv();
 const debug = debugLib('lint-recently:cfg');
@@ -14,20 +13,22 @@ export interface IConfig {
   patterns: Record<string, string | Array<string>>;
 }
 
-function resolveConfig(configPath: string) {
-  try {
-    return require.resolve(configPath);
-  } catch {
-    return configPath;
-  }
-}
-
 export function loadConfig(configPath?: string) {
   const explorer = cosmiconfig('lint-recently', {
     searchPlaces: ['.lintrecentlyrc.json', '.lintrecentlyrc.js', 'package.json'],
   });
 
-  return configPath ? explorer.load(resolveConfig(configPath)) : explorer.search();
+  if (!configPath) {
+    return explorer.search();
+  }
+
+  let resolvedConfig: string;
+  try {
+    resolvedConfig = require.resolve(configPath);
+  } catch {
+    resolvedConfig = configPath;
+  }
+  return explorer.load(resolvedConfig);
 }
 
 export function validateConfig(config: IConfig, logger: ILogger): IConfig {
