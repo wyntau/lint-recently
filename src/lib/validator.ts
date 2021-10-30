@@ -2,10 +2,10 @@ import { promises as fs, constants } from 'fs';
 
 import { invalidOption, incorrectBraces } from './messages';
 import { InvalidOptionsError } from './symbols';
-import debugLib from 'debug';
+import { debugLib } from './debug';
 import { ILogger } from './logger';
 
-const debug = debugLib('lint-recently:options');
+const debug = debugLib('options');
 
 export interface IValidateShellOptions {
   shell?: string | boolean;

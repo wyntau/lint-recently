@@ -1,12 +1,13 @@
 import { cosmiconfig } from 'cosmiconfig';
-import debugLib from 'debug';
+import { debugLib } from './debug';
 import { validateAndFixBraces } from './validator';
 import Ajv from 'ajv';
 import { ILogger } from './logger';
 import configSchema from './schema.json';
+import { pkgName } from './constant';
 
 const ajv = new Ajv();
-const debug = debugLib('lint-recently:cfg');
+const debug = debugLib('cfg');
 
 export interface IConfig {
   days?: number;
@@ -14,8 +15,8 @@ export interface IConfig {
 }
 
 export function loadConfig(configPath?: string) {
-  const explorer = cosmiconfig('lint-recently', {
-    searchPlaces: ['.lintrecentlyrc.json', '.lintrecentlyrc.js', 'package.json'],
+  const explorer = cosmiconfig(pkgName, {
+    searchPlaces: [`.${pkgName}rc.json`, `.${pkgName}rc.js`, 'package.json'],
   });
 
   if (!configPath) {

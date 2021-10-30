@@ -1,7 +1,7 @@
 import micromatch from 'micromatch';
 import normalize from 'normalize-path';
 import path from 'path';
-import debugLib from 'debug';
+import { debugLib } from './debug';
 import { IConfig } from './config';
 import cliTruncate from 'cli-truncate';
 import { redBright, dim } from 'colorette';
@@ -11,7 +11,7 @@ import { error, info } from './logger';
 import { getInitialState, IContext } from './context';
 import { TaskError } from './symbols';
 
-const debug = debugLib('lint-recently:task');
+const debug = debugLib('task');
 
 export interface IGenerateTasksOptions {
   patterns: IConfig['patterns'];

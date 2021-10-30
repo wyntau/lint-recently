@@ -3,11 +3,11 @@
 import fs from 'fs';
 import supportsColor from 'supports-color';
 import cmdline from 'commander';
-import debugLib from 'debug';
 import pleaseUpgradeNode from 'please-upgrade-node';
 
 import { lintRecently } from '../lib';
 import { CONFIG_STDIN_ERROR } from '../lib/messages';
+import { debugLib } from '../lib/debug';
 
 // Force colors for packages that depend on https://www.npmjs.com/package/supports-color
 if (supportsColor.stdout) {
@@ -26,7 +26,7 @@ pleaseUpgradeNode(
   })
 );
 
-const debug = debugLib('lint-recently:bin');
+const debug = debugLib('bin');
 
 cmdline
   .version(pkg.version)
