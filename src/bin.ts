@@ -5,9 +5,10 @@ import supportsColor from 'supports-color';
 import cmdline from 'commander';
 import pleaseUpgradeNode from 'please-upgrade-node';
 
-import { lintRecently } from '../lib';
-import { CONFIG_STDIN_ERROR } from '../lib/messages';
-import { debugLib } from '../lib/debug';
+import { lintRecently } from '.';
+import { CONFIG_STDIN_ERROR } from './messages';
+import { enableDebug, debugLib } from './debug';
+import { pkg } from './constant';
 
 // Force colors for packages that depend on https://www.npmjs.com/package/supports-color
 if (supportsColor.stdout) {
@@ -17,9 +18,8 @@ if (supportsColor.stdout) {
 // Do not terminate main Listr process on SIGINT
 process.on('SIGINT', () => {}); // eslint-disable-line
 
-const pkg = require('../../package.json'); // eslint-disable-line
 pleaseUpgradeNode(
-  Object.assign({}, pkg, {
+  Object.assign({}, pkg as Record<string, any>, {
     engines: {
       node: '>=12.13.0', // First LTS release of 'Erbium'
     },
@@ -29,7 +29,7 @@ pleaseUpgradeNode(
 const debug = debugLib('bin');
 
 cmdline
-  .version(pkg.version)
+  .version(pkg.version!)
   .option('-c, --config [path]', 'path to configuration file, or - to read from stdin')
   .option('-d, --debug', 'print additional debug information', false)
   .option(
@@ -46,7 +46,7 @@ cmdline
 const cmdlineOptions = cmdline.opts();
 
 if (cmdlineOptions.debug) {
-  debugLib.enable('lint-recently:*');
+  enableDebug();
 }
 
 debug('Running `lint-recently@%s`', pkg.version);

@@ -4,7 +4,7 @@ import { validateAndFixBraces } from './validator';
 import Ajv from 'ajv';
 import { ILogger } from './logger';
 import configSchema from './schema.json';
-import { pkgName } from './constant';
+import { configName, pkgName } from './constant';
 
 const ajv = new Ajv();
 const debug = debugLib('cfg');
@@ -16,7 +16,7 @@ export interface IConfig {
 
 export function loadConfig(configPath?: string) {
   const explorer = cosmiconfig(pkgName, {
-    searchPlaces: [`.${pkgName}rc.json`, `.${pkgName}rc.js`, 'package.json'],
+    searchPlaces: [`.${configName}rc.json`, `.${configName}rc.js`, 'package.json'],
   });
 
   if (!configPath) {
