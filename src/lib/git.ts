@@ -1,9 +1,9 @@
 import execa from 'execa';
-import debugLib from 'debug';
+import { debugLib } from './debug';
 import normalize from 'normalize-path';
 import { sep } from 'path';
 
-const debug = debugLib('lint-recently:git');
+const debug = debugLib('git');
 
 /**
  * Explicitly never recurse commands into submodules, overriding local/global configuration.

@@ -1,5 +1,5 @@
 import { Listr, ListrTask } from 'listr2';
-import debugLib from 'debug';
+import { debugLib } from './debug';
 
 import { execGit, resolveGitRepo } from './git';
 import { generateTasks, makeCmdTasks } from './task';
@@ -10,7 +10,7 @@ import { getInitialState, IContext } from './context';
 import { GitRepoError, GetRecentlyFilesError } from './symbols';
 import { IConfig } from './config';
 
-const debugLog = debugLib('lint-recently:run');
+const debugLog = debugLib('run');
 
 const createError = (ctx: IContext) => Object.assign(new Error('lint-recently failed'), { ctx });
 

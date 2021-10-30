@@ -1,4 +1,4 @@
-import debugLib from 'debug';
+import { debugLib } from './debug';
 import { printTaskOutput } from './logger';
 import { runAll } from './runAll';
 import { ConfigNotFoundError } from './symbols';
@@ -7,7 +7,7 @@ import { validateShell } from './validator';
 
 import { loadConfig } from './config';
 
-const debugLog = debugLib('lint-recently:main');
+const debugLog = debugLib('main');
 
 export interface ILintRecentlyOptions {
   concurrent?: boolean | number;

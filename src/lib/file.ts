@@ -1,4 +1,4 @@
-import debugLib from 'debug';
+import { debugLib } from './debug';
 import { readFile as _readFile } from 'fs';
 import { promisify } from 'util';
 import dayjs from 'dayjs';
@@ -11,7 +11,7 @@ import pMap from 'p-map';
 
 dayjs.extend(customParseFormat);
 
-const debug = debugLib('lint-recently:file');
+const debug = debugLib('file');
 const fsReadFile = promisify(_readFile);
 
 export const readFile = async (filename: string, ignoreENOENT = true) => {
