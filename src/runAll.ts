@@ -9,10 +9,11 @@ import { FAILED_GET_RECENTLY_FILES, NOT_GIT_REPO, NO_RECENTLY_FILES, NO_TASKS } 
 import { getInitialState, IContext } from './context';
 import { GitRepoError, GetRecentlyFilesError } from './symbols';
 import { IConfig } from './config';
+import { pkgName } from './constant';
 
 const debugLog = debugLib('run');
 
-const createError = (ctx: IContext) => Object.assign(new Error('lint-recently failed'), { ctx });
+const createError = (ctx: IContext) => Object.assign(new Error(`${pkgName} failed`), { ctx });
 
 export interface IRunAllOptions {
   concurrent?: boolean | number;
@@ -73,7 +74,7 @@ export async function runAll(options: IRunAllOptions, logger = console) {
     throw createError(ctx);
   }
 
-  // If there are no files avoid executing any lint-recently logic
+  // If there are no files avoid executing any logic
   if (files.length === 0) {
     if (!quiet) {
       ctx.output.push(NO_RECENTLY_FILES);
@@ -146,7 +147,7 @@ export async function runAll(options: IRunAllOptions, logger = console) {
   }
 
   // If all of the configured tasks should be skipped
-  // avoid executing any lint-recently logic
+  // avoid executing any logic
   if (listrTasks.every((task) => (typeof task.skip === 'function' ? task.skip(ctx) : !!task.skip))) {
     if (!quiet) {
       ctx.output.push(NO_TASKS);

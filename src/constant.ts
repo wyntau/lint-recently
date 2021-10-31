@@ -1,7 +1,6 @@
 import { PackageJson } from 'type-fest';
 
-const pkg: PackageJson = require('../package.json'); // eslint-disable-line
-
-export { pkg };
+export const pkg: PackageJson = require('../package.json'); // eslint-disable-line
 export const pkgName = pkg.name!;
+export const pkgVersion = pkg.version!;
 export const configName = pkgName.replace(/-/g, '');

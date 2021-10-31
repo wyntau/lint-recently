@@ -8,7 +8,7 @@ import pleaseUpgradeNode from 'please-upgrade-node';
 import { lintRecently } from '.';
 import { CONFIG_STDIN_ERROR } from './messages';
 import { enableDebug, debugLib } from './debug';
-import { pkg } from './constant';
+import { pkg, pkgName, pkgVersion } from './constant';
 
 // Force colors for packages that depend on https://www.npmjs.com/package/supports-color
 if (supportsColor.stdout) {
@@ -29,7 +29,7 @@ pleaseUpgradeNode(
 const debug = debugLib('bin');
 
 cmdline
-  .version(pkg.version!)
+  .version(pkgVersion)
   .option('-c, --config [path]', 'path to configuration file, or - to read from stdin')
   .option('-d, --debug', 'print additional debug information', false)
   .option(
@@ -37,7 +37,7 @@ cmdline
     'the number of tasks to run concurrently, or false to run tasks serially',
     true
   )
-  .option('-q, --quiet', 'disable lint-recently’s own console output', false)
+  .option('-q, --quiet', `disable ${pkgName}’s own console output`, false)
   .option('-r, --relative', 'pass relative filepaths to tasks', false)
   .option('-x, --shell [path]', 'skip parsing of tasks for better shell support', false)
   .option('-v, --verbose', 'show task output even when tasks succeed; by default only failed output is shown', false)
@@ -49,7 +49,7 @@ if (cmdlineOptions.debug) {
   enableDebug();
 }
 
-debug('Running `lint-recently@%s`', pkg.version);
+debug('Running `%s@%s`', pkgName, pkgVersion);
 
 /**
  * Get the maximum length of a command-line argument string based on current platform

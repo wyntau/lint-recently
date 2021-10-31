@@ -6,6 +6,7 @@ import { IConfig, validateConfig } from './config';
 import { validateShell } from './validator';
 
 import { loadConfig } from './config';
+import { pkg, pkgName } from './constant';
 
 const debugLog = debugLib('main');
 
@@ -52,7 +53,7 @@ export async function lintRecently(options: ILintRecentlyOptions = {}, logger = 
   // resolved.config is the parsed configuration object
   // resolved.filepath is the path to the config file that was found
   const config = validateConfig(resolved.config, logger);
-  debugLog('lint-recently config: %O', config);
+  debugLog('%s config: %O', pkgName, config);
 
   // Unset GIT_LITERAL_PATHSPECS to not mess with path interpretation
   debugLog('Unset GIT_LITERAL_PATHSPECS (was `%s`)', process.env.GIT_LITERAL_PATHSPECS);
