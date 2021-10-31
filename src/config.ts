@@ -15,7 +15,7 @@ export interface IConfig {
 }
 
 export function loadConfig(configPath?: string) {
-  const explorer = cosmiconfig(pkgName!, {
+  const explorer = cosmiconfig(pkgName, {
     searchPlaces: [`.${configName}rc.json`, `.${configName}rc.js`, 'package.json'],
   });
 
