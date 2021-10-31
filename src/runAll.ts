@@ -27,7 +27,7 @@ export interface IRunAllOptions {
   verbose?: boolean;
 }
 
-export async function runAll(options: IRunAllOptions, logger = console) {
+export async function runAll(options: IRunAllOptions) {
   const {
     concurrent = true,
     config,

@@ -6,7 +6,7 @@ import { IConfig, validateConfig } from './config';
 import { validateShell } from './validator';
 
 import { loadConfig } from './config';
-import { pkg, pkgName } from './constant';
+import { pkgName } from './constant';
 
 const debugLog = debugLib('main');
 
@@ -60,20 +60,17 @@ export async function lintRecently(options: ILintRecentlyOptions = {}, logger = 
   delete process.env.GIT_LITERAL_PATHSPECS;
 
   try {
-    const ctx = await runAll(
-      {
-        concurrent,
-        config,
-        cwd,
-        debug,
-        maxArgLength,
-        quiet,
-        relative,
-        shell,
-        verbose,
-      },
-      logger
-    );
+    const ctx = await runAll({
+      concurrent,
+      config,
+      cwd,
+      debug,
+      maxArgLength,
+      quiet,
+      relative,
+      shell,
+      verbose,
+    });
     debugLog('Tasks were executed successfully!');
     printTaskOutput(ctx, logger);
     return true;
