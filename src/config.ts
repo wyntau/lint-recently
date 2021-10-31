@@ -15,7 +15,7 @@ export interface IConfig {
 }
 
 export function loadConfig(configPath?: string) {
-  const explorer = cosmiconfig(pkgName, {
+  const explorer = cosmiconfig(pkgName!, {
     searchPlaces: [`.${configName}rc.json`, `.${configName}rc.js`, 'package.json'],
   });
 
@@ -38,7 +38,7 @@ export function validateConfig(config: IConfig, logger: ILogger): IConfig {
   const validateFn = ajv.compile(configSchema);
   if (!validateFn(config)) {
     const message = validateFn.errors?.map((item) => item.message).join('\n\n');
-    logger.error(`Could not parse lint-recently config.
+    logger.error(`Could not parse ${pkgName} config.
 ${message}`);
     throw new Error(message);
   }
@@ -57,7 +57,7 @@ ${message}`);
 
   if (errors.length) {
     const message = errors.join('\n\n');
-    logger.error(`Could not parse lint-recently config.
+    logger.error(`Could not parse ${pkgName} config.
 ${message}`);
     throw new Error(message);
   }
