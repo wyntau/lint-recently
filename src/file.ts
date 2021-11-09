@@ -80,9 +80,7 @@ export async function getRecentlyFiles(options: IGetRecentlyFilesOptions = {}) {
     await pMap(linesRaw, (file) => getLatestCommitDate(file).then<[string, string]>((date) => [date, file]), {
       concurrency: 5,
     })
-  ).filter((item) => {
-    return item[0] >= commitDateBefore;
-  });
+  ).filter((item) => item[0] >= commitDateBefore);
   lines.sort((a, b) => (a[0] >= b[0] ? -1 : 1));
   debug('concurrency loaded recently files list: %O', lines);
   //#endregion
