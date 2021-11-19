@@ -30,7 +30,8 @@ export const readFile = async (filename: string, ignoreENOENT = true) => {
 
 async function getLatestCommitDate(path: string): Promise<string> {
   try {
-    return await execGit(['log', '-1', `--date=iso8601`, `--pretty=format:%cd`, path]);
+    // 使用 --no-merges 不记录合并节点, 因为合并节点会导致文件的修改时间很新, 做了无用的校验
+    return await execGit(['log', '-1', '--no-merges', `--date=iso8601`, `--pretty=format:%cd`, path]);
   } catch {
     return '';
   }
