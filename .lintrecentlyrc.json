@@ -1,5 +1,5 @@
 {
-  "$schema": "./src/lib/schema.json",
+  "$schema": "./src/schema.json",
   "days": 3,
   "patterns": {
     "*.{ts,tsx,js,jsx}": ["eslint"]
