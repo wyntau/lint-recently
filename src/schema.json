@@ -6,7 +6,7 @@
   "properties": {
     "days": {
       "description": "we will use `git diff` between the latest commit and ${days} days ago's commit to find all modified files. Default to 3.",
-      "type": "number",
+      "type": "integer",
       "minimum": 1
     },
     "patterns": {
@@ -38,7 +38,7 @@
             },
             "option": {
               "description": "we will use `git diff` between the latest commit and ${days} days ago's commit to find all modified files. Default to 3.",
-              "type": "number",
+              "type": "integer",
               "minimum": 1
             }
           },
@@ -53,7 +53,7 @@
             },
             "option": {
               "description": "recent commit counts",
-              "type": "number",
+              "type": "integer",
               "minimum": 1
             }
           },
