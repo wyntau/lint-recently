@@ -25,6 +25,55 @@
           }
         ]
       }
+    },
+    "strategy": {
+      "description": "strategy to find recently modified files",
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "days"
+            },
+            "option": {
+              "description": "we will use `git diff` between the latest commit and ${days} days ago's commit to find all modified files. Default to 3.",
+              "type": "number",
+              "minimum": 1
+            }
+          },
+          "required": ["type", "option"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "commits"
+            },
+            "option": {
+              "description": "recent commit counts",
+              "type": "number",
+              "minimum": 1
+            }
+          },
+          "required": ["type", "option"]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "branch"
+            },
+            "option": {
+              "description": "base branch to diff",
+              "type": "string"
+            }
+          },
+          "required": ["type", "option"]
+        }
+      ]
     }
   },
   "required": ["patterns"]
