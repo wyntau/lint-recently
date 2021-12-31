@@ -5,5 +5,7 @@
     "source.fixAll.eslint": true
   },
 
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  "json.schemas": [{ "fileMatch": ["/.lintrecentlyrc.json"], "url": "/src/schema.json" }]
 }
