@@ -78,6 +78,6 @@ export async function getDiffOption(lintRecentlyConfig: ILintRecentlyConfig): Pr
     commitHashBefore = await execGit(['rev-list', '--max-parents=0', 'HEAD']);
   }
 
-  debug('get --diff option %s %s', commitHashBefore, commitHashLatest);
+  debug("get --diff args: '%s %s'", commitHashBefore, commitHashLatest);
   return `${commitHashBefore} ${commitHashLatest}`;
 }
