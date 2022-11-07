@@ -1,5 +1,5 @@
 import _debugLib from 'debug';
-import { pkgName } from './constant';
+import { pkgName } from './constants.mjs';
 
 export function debugLib(moduleName: string) {
   return _debugLib(`${pkgName}:${moduleName}`);

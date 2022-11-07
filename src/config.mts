@@ -1,10 +1,8 @@
 import { cosmiconfig } from 'cosmiconfig';
-import { debugLib } from './debug';
-import { validateAndFixBraces } from './validator';
 import Ajv from 'ajv';
-import { ILogger } from './logger';
+import { debugLib } from './debug.mjs';
 import configSchema from './schema.json';
-import { configName, pkgName } from './constant';
+import { configName, pkgName } from './constants.mjs';
 
 const ajv = new Ajv();
 const debug = debugLib('cfg');
@@ -16,7 +14,7 @@ export interface IConfig {
 
 export function loadConfig(configPath?: string) {
   const explorer = cosmiconfig(pkgName, {
-    searchPlaces: [`.${configName}rc.json`, `.${configName}rc.js`, 'package.json'],
+    searchPlaces: [`.${configName}rc.json`, 'package.json'],
   });
 
   if (!configPath) {
@@ -32,6 +30,7 @@ export function loadConfig(configPath?: string) {
   return explorer.load(resolvedConfig);
 }
 
+type ILogger = Console;
 export function validateConfig(config: IConfig, logger: ILogger): IConfig {
   debug('Validating config');
 
@@ -43,24 +42,5 @@ ${message}`);
     throw new Error(message);
   }
 
-  const errors: Array<string> = [];
-  const validatedConfig: IConfig = Object.assign({}, config);
-  validatedConfig.patterns = Object.entries(validatedConfig.patterns).reduce((collection, [pattern, task]) => {
-    /**
-     * A typical configuration error is using invalid brace expansion, like `*.{js}`.
-     * These are automatically fixed and warned about.
-     */
-    const fixedPattern = validateAndFixBraces(pattern, logger);
-
-    return { ...collection, [fixedPattern]: task };
-  }, {});
-
-  if (errors.length) {
-    const message = errors.join('\n\n');
-    logger.error(`Could not parse ${pkgName} config.
-${message}`);
-    throw new Error(message);
-  }
-
-  return validatedConfig;
+  return config;
 }
