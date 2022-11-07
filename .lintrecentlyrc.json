@@ -1,6 +1,6 @@
 {
   "days": 3,
   "patterns": {
-    "*.{ts,tsx,js,jsx}": ["eslint"]
+    "*.{ts,mts}": ["eslint"]
   }
 }
