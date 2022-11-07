@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 
 import supportsColor from 'supports-color';
-import cli from 'commander';
+import { program as cli } from 'commander';
 
 import { lintRecently } from './index.mjs';
 import { enableDebug, debugLib } from './debug.mjs';

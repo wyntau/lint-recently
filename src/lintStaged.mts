@@ -1,7 +1,8 @@
-import { execGit, getLatestCommitDate } from './git.mjs';
+import path from 'node:path';
+import { execGit, getLatestCommitDate, getRootPath } from './git.mjs';
 import { IConfig as ILintRecentlyConfig } from './config.mjs';
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import pMap from 'p-map';
 import { debugLib } from './debug.mjs';
 
@@ -11,7 +12,8 @@ const debug = debugLib('lintStaged');
 type lintStagedConfigFn = (files: Array<string>) => string | Array<string> | Promise<string | Array<string>>;
 
 export async function getConfigObj(lintRecentlyConfig: ILintRecentlyConfig) {
-  const filePatterns = Object.keys(lintRecentlyConfig);
+  const filePatterns = Object.keys(lintRecentlyConfig.patterns);
+  const ROOT_PATH = await getRootPath();
 
   const commitDateLatest = await getLatestCommitDate('HEAD');
   const dayjsFormat = 'YYYY-MM-DD HH:mm:ss ZZ';
@@ -19,7 +21,7 @@ export async function getConfigObj(lintRecentlyConfig: ILintRecentlyConfig) {
     .subtract(lintRecentlyConfig.days ?? 3, 'day')
     .format(dayjsFormat);
 
-  return filePatterns.reduce((config: Record<string, lintStagedConfigFn>, filePattern) => {
+  const lintStagedConfig = filePatterns.reduce((config: Record<string, lintStagedConfigFn>, filePattern) => {
     let commands = lintRecentlyConfig.patterns[filePattern];
     config[filePattern] = async (files: Array<string>) => {
       if (!Array.isArray(commands)) {
@@ -28,18 +30,26 @@ export async function getConfigObj(lintRecentlyConfig: ILintRecentlyConfig) {
 
       //#region sort files by latest commited datetime
       const filteredFiles = (
-        await pMap(files, (file) => getLatestCommitDate(file).then<[string, string]>((date) => [date, file]), {
-          concurrency: 5,
-        })
-      ).filter((item) => item[0] >= commitDateBefore);
+        await pMap(
+          files.map((item) => path.relative(ROOT_PATH, item)), // remove absolute path, just leave relative path
+          (file) => getLatestCommitDate(file).then<[string, string]>((date) => [date, file]),
+          {
+            concurrency: 5,
+          }
+        )
+      ).filter((item) => (console.log(item), item[0] >= commitDateBefore));
       filteredFiles.sort((a, b) => (a[0] >= b[0] ? -1 : 1));
       debug('concurrency loaded recently files list: %O', filteredFiles);
       //#endregion
 
-      return commands.map((command: string) => `${command} ${filteredFiles.join(' ')}`);
+      return commands.map((command: string) => `${command} ${filteredFiles.map((item) => item[1]).join(' ')}`);
     };
     return config;
   }, {});
+
+  console.log('lintStagedConfig', lintStagedConfig.toString());
+
+  return lintStagedConfig;
 }
 
 export async function getDiffOption(lintRecentlyConfig: ILintRecentlyConfig): Promise<string> {
@@ -70,5 +80,6 @@ export async function getDiffOption(lintRecentlyConfig: ILintRecentlyConfig): Pr
     commitHashBefore = await execGit(['rev-list', '--max-parents=0', 'HEAD']);
   }
 
+  debug('get --diff option %s %s', commitHashBefore, commitHashLatest);
   return `${commitHashBefore} ${commitHashLatest}`;
 }

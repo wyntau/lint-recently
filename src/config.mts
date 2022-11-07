@@ -1,11 +1,13 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { cosmiconfig } from 'cosmiconfig';
 import Ajv from 'ajv';
 import { debugLib } from './debug.mjs';
-import configSchema from './schema.json';
-import { configName, pkgName } from './constants.mjs';
+import { configName, pkgName, __dirname } from './constants.mjs';
 
 const ajv = new Ajv();
 const debug = debugLib('cfg');
+const configSchema = JSON.parse(fs.readFileSync(path.join(__dirname, 'schema.json')).toString().trim());
 
 export interface IConfig {
   days?: number;

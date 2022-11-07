@@ -25,11 +25,15 @@ export async function execGit(cmd: Array<string>, options: IExecGitOptions = {})
   }
 }
 
-export async function getLatestCommitDate(path: string): Promise<string> {
+export function getLatestCommitDate(path: string): Promise<string> {
   try {
     // 使用 --no-merges 不记录合并节点, 因为合并节点会导致文件的修改时间很新, 做了无用的校验
-    return await execGit(['log', '-1', '--no-merges', `--date=iso8601`, `--pretty=format:%cd`, path]);
+    return execGit(['log', '-1', '--no-merges', `--date=iso8601`, `--pretty=format:%cd`, path]);
   } catch {
-    return '';
+    return Promise.resolve('');
   }
+}
+
+export function getRootPath(): Promise<string> {
+  return execGit(['git', 'rev-parse', '--show-toplevel']);
 }
