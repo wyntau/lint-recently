@@ -20,6 +20,7 @@
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@types/commander": "^2.12.2",
     "@types/debug": "^4.1.7",
     "@types/micromatch": "^4.0.2",
     "@types/node": "^16.10.3",
@@ -40,7 +41,7 @@
     "ajv": "^8.6.3",
     "cli-truncate": "2.x",
     "colorette": "^2.0.16",
-    "commander": "^9.0.0",
+    "commander": "^9.4.1",
     "cosmiconfig": "^7.0.1",
     "dayjs": "^1.10.7",
     "debug": "^4.3.2",
