@@ -37,7 +37,7 @@ export async function getConfigObj(lintRecentlyConfig: ILintRecentlyConfig) {
             concurrency: 5,
           }
         )
-      ).filter((item) => (console.log(item), item[0] >= commitDateBefore));
+      ).filter((item) => item[0] >= commitDateBefore);
       filteredFiles.sort((a, b) => (a[0] >= b[0] ? -1 : 1));
       debug('concurrency loaded recently files list: %O', filteredFiles);
       //#endregion
@@ -46,8 +46,6 @@ export async function getConfigObj(lintRecentlyConfig: ILintRecentlyConfig) {
     };
     return config;
   }, {});
-
-  console.log('lintStagedConfig', lintStagedConfig.toString());
 
   return lintStagedConfig;
 }
