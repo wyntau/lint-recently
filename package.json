@@ -2,8 +2,15 @@
   "name": "lint-recently",
   "version": "0.1.4",
   "description": "lint recently git commited files",
-  "main": "./dist/index.js",
-  "bin": "./dist/bin.js",
+  "engines": {
+    "node": "^14.13.1 || >=16.0.0"
+  },
+  "type": "module",
+  "bin": "./dist/bin.mjs",
+  "exports": {
+    ".": "./dist/index.mjs",
+    "./package.json": "./package.json"
+  },
   "files": [
     "/dist"
   ],
