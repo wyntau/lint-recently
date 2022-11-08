@@ -12,17 +12,14 @@ const GIT_GLOBAL_OPTIONS = [...NO_SUBMODULE_RECURSE];
 
 export type IExecGitOptions = execaOptions;
 export async function execGit(cmd: Array<string>, options: IExecGitOptions = {}): Promise<string> {
-  debug('Running git command: %s', cmd.join(' '));
-  try {
-    const { stdout } = await execa('git', GIT_GLOBAL_OPTIONS.concat(cmd), {
-      ...options,
-      all: true,
-      cwd: options.cwd || process.cwd(),
-    });
-    return stdout;
-  } catch ({ all }) {
-    throw new Error(all as any);
-  }
+  const { stdout } = await execa('git', GIT_GLOBAL_OPTIONS.concat(cmd), {
+    ...options,
+    all: true,
+    cwd: options.cwd || process.cwd(),
+  });
+
+  debug('Running git command: %s, output: %s', cmd.join(' '), stdout);
+  return stdout;
 }
 
 export function getLatestCommitDate(path: string): Promise<string> {
