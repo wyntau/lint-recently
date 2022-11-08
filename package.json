@@ -1,6 +1,6 @@
 {
   "name": "lint-recently",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "lint recently git commited files",
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
