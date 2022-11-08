@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { execGit, getLatestCommitDate, getRootPath } from './git.mjs';
+import { execGit, getLatestCommitDate, getRootDir } from './git.mjs';
 import { IConfig as ILintRecentlyConfig } from './config.mjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
@@ -14,7 +14,7 @@ type lintStagedConfigFn = (files: Array<string>) => string | Array<string> | Pro
 
 async function getConfig(lintRecentlyConfig: ILintRecentlyConfig) {
   const filePatterns = Object.keys(lintRecentlyConfig.patterns);
-  const ROOT_PATH = await getRootPath();
+  const ROOT_DIR = await getRootDir();
 
   const commitDateLatest = await getLatestCommitDate('HEAD');
   const dayjsFormat = 'YYYY-MM-DD HH:mm:ss ZZ';
@@ -32,7 +32,7 @@ async function getConfig(lintRecentlyConfig: ILintRecentlyConfig) {
       //#region sort files by latest commited datetime
       const filteredFiles = (
         await pMap(
-          files.map((item) => path.relative(ROOT_PATH, item)), // remove absolute path, just leave relative path
+          files.map((item) => path.relative(ROOT_DIR, item)), // remove absolute path, just leave relative path
           (file) => getLatestCommitDate(file).then<[string, string]>((date) => [date, file]),
           {
             concurrency: 5,
@@ -40,7 +40,7 @@ async function getConfig(lintRecentlyConfig: ILintRecentlyConfig) {
         )
       ).filter((item) => item[0] >= commitDateBefore);
       filteredFiles.sort((a, b) => (a[0] >= b[0] ? -1 : 1));
-      debug('concurrency loaded recently files list: %O', filteredFiles);
+      debug("loaded recently files list for `%s': %O", filePattern, filteredFiles);
       //#endregion
 
       return filteredFiles.length

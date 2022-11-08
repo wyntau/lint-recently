@@ -34,6 +34,6 @@ export function getLatestCommitDate(path: string): Promise<string> {
   }
 }
 
-export function getRootPath(): Promise<string> {
+export function getRootDir(): Promise<string> {
   return execGit(['git', 'rev-parse', '--show-toplevel']);
 }

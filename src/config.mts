@@ -2,8 +2,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { cosmiconfig } from 'cosmiconfig';
 import Ajv from 'ajv';
-import { configName, pkgName, __dirname } from './constants.mjs';
+import { configName, pkgName, __dirname, ConfigNotFoundError } from './constants.mjs';
+import { debugLib } from './debug.mjs';
 
+const debug = debugLib('config');
 const ajv = new Ajv();
 const configSchema = JSON.parse(fs.readFileSync(path.join(__dirname, 'schema.json')).toString().trim());
 
@@ -12,7 +14,26 @@ export interface IConfig {
   patterns: Record<string, string | Array<string>>;
 }
 
-export function loadConfig(configPath?: string) {
+interface IGetConfigParams {
+  configObject?: IConfig;
+  configPath?: string;
+}
+export async function getConfig(params: IGetConfigParams): Promise<IConfig> {
+  const resolved = params.configObject
+    ? { config: params.configObject, filepath: '(input)' }
+    : await loadConfig(params.configPath);
+
+  if (resolved == null) {
+    console.error(`${ConfigNotFoundError.message}.`);
+    throw ConfigNotFoundError;
+  }
+  const validatedConfig = validateConfig(resolved.config);
+  debug('Successfully loaded config from `%s`: %O', resolved.filepath, validatedConfig);
+
+  return validatedConfig;
+}
+
+function loadConfig(configPath?: string) {
   const explorer = cosmiconfig(pkgName, {
     searchPlaces: [`.${configName}rc.json`, 'package.json'],
   });
@@ -30,12 +51,11 @@ export function loadConfig(configPath?: string) {
   return explorer.load(resolvedConfig);
 }
 
-type ILogger = Console;
-export function validateConfig(config: IConfig, logger: ILogger): IConfig {
+function validateConfig(config: IConfig): IConfig {
   const validateFn = ajv.compile(configSchema);
   if (!validateFn(config)) {
     const message = validateFn.errors?.map((item) => `${item.instancePath} incorrect`).join('\n');
-    logger.error(`Could not parse ${pkgName} config.\n${message}`);
+    console.error(`Could not parse ${pkgName} config.\n${message}`);
     throw new Error(message);
   }
 
