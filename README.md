@@ -21,19 +21,19 @@ Usage: lint-recently [options]
 Options:
   -V, --version                      output the version number
   -c, --config [path]                path to configuration file, or - to read from stdin
+  --cwd [path]                       run all tasks in specific directory, instead of the current
   -d, --debug                        print additional debug information (default: false)
-  -p, --concurrent <parallel tasks>  the number of tasks to run concurrently, or false to run tasks serially (default: true)
+  -p, --concurrent <number|boolean>  the number of tasks to run concurrently, or false for serial (default: true)
   -q, --quiet                        disable lint-recently’s own console output (default: false)
   -r, --relative                     pass relative filepaths to tasks (default: false)
-  -x, --shell [path]                 skip parsing of tasks for better shell support (default: false)
   -v, --verbose                      show task output even when tasks succeed; by default only failed output is shown (default: false)
+  -x, --shell [path]                 skip parsing of tasks for better shell support (default: false)
   -h, --help                         display help for command
 ```
 
 ## Configuration
 configuration will be loaded in these files in order.
 - `.lintrecentlyrc.json`
-- `.lintrecentlyrc.js`
 - `lint-recently` object in package.json
 
 Options supported are list below
@@ -51,9 +51,6 @@ Options supported are list below
 }
 
 ```
-
-## Thanks
-Special thanks to [lint-staged](https://github.com/okonet/lint-staged). The project was heavily inspired by lint-staged, and many code was directly borrowed from lint-staged.
 
 ## License
 MIT
