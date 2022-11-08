@@ -43,7 +43,9 @@ async function getConfig(lintRecentlyConfig: ILintRecentlyConfig) {
       debug('concurrency loaded recently files list: %O', filteredFiles);
       //#endregion
 
-      return commands.map((command: string) => `${command} ${filteredFiles.map((item) => item[1]).join(' ')}`);
+      return filteredFiles.length
+        ? commands.map((command: string) => `${command} ${filteredFiles.map((item) => item[1]).join(' ')}`)
+        : []; // 如果没有符合条件的文件, 则返回空数组, 不执行任何命令
     };
     return config;
   }, {});
