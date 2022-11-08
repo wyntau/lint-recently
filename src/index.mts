@@ -1,7 +1,7 @@
 // eslint-disable-next-line
 // @ts-ignore
 import lintStaged from 'lint-staged';
-import { IConfig, loadConfig } from './config.mjs';
+import { IConfig, loadConfig, validateConfig } from './config.mjs';
 import { debugLib } from './debug.mjs';
 import { ConfigNotFoundError } from './constants.mjs';
 import { getOptions as getLintStagedOptions } from './lintStaged.mjs';
@@ -28,8 +28,9 @@ export async function lintRecently(_options: ILintRecentlyOptions = {}, logger =
     logger.error(`${ConfigNotFoundError.message}.`);
     throw ConfigNotFoundError;
   }
-  debugLog('Successfully loaded config from `%s`: %O', resolved.filepath, resolved.config);
+  const validatedConfig = validateConfig(resolved.config, console);
+  debugLog('Successfully loaded config from `%s`: %O', resolved.filepath, validatedConfig);
 
-  const lintStagedOptions = await getLintStagedOptions({ ...lintRecentlyOptions, config: resolved.config });
+  const lintStagedOptions = await getLintStagedOptions({ ...lintRecentlyOptions, config: validatedConfig });
   return lintStaged(lintStagedOptions);
 }

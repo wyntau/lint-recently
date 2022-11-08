@@ -2,11 +2,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { cosmiconfig } from 'cosmiconfig';
 import Ajv from 'ajv';
-import { debugLib } from './debug.mjs';
 import { configName, pkgName, __dirname } from './constants.mjs';
 
 const ajv = new Ajv();
-const debug = debugLib('cfg');
 const configSchema = JSON.parse(fs.readFileSync(path.join(__dirname, 'schema.json')).toString().trim());
 
 export interface IConfig {
@@ -34,13 +32,10 @@ export function loadConfig(configPath?: string) {
 
 type ILogger = Console;
 export function validateConfig(config: IConfig, logger: ILogger): IConfig {
-  debug('Validating config');
-
   const validateFn = ajv.compile(configSchema);
   if (!validateFn(config)) {
-    const message = validateFn.errors?.map((item) => item.message).join('\n\n');
-    logger.error(`Could not parse ${pkgName} config.
-${message}`);
+    const message = validateFn.errors?.map((item) => `${item.instancePath} incorrect`).join('\n');
+    logger.error(`Could not parse ${pkgName} config.\n${message}`);
     throw new Error(message);
   }
 
