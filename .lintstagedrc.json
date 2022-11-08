@@ -1,4 +1,4 @@
 {
-  "*.{ts,tsx,js,jsx}": ["eslint --fix"],
+  "*.{ts,mts}": ["eslint --fix"],
   "*.json": ["prettier --trailing-comma none --write"]
 }
