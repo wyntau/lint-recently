@@ -22,12 +22,20 @@ export async function execGit(cmd: Array<string>, options: IExecGitOptions = {})
   return stdout;
 }
 
-export function getLatestCommitDate(path: string): Promise<string> {
+export async function getLatestCommitDate(path = 'HEAD'): Promise<string> {
   try {
     // 使用 --no-merges 不记录合并节点, 因为合并节点会导致文件的修改时间很新, 做了无用的校验
-    return execGit(['log', '-1', '--no-merges', `--date=iso8601`, `--pretty=format:%cd`, path]);
+    return await execGit(['log', '-1', '--no-merges', `--date=iso8601`, `--pretty=format:%cd`, path]);
   } catch {
-    return Promise.resolve('');
+    return '';
+  }
+}
+
+export async function getLatestCommitHash(path = 'HEAD'): Promise<string> {
+  try {
+    return await execGit(['log', '-1', '--pretty=format:%H', path]);
+  } catch {
+    return '';
   }
 }
 

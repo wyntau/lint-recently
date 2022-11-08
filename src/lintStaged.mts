@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { execGit, getLatestCommitDate, getRootDir } from './git.mjs';
+import { execGit, getLatestCommitDate, getLatestCommitHash, getRootDir } from './git.mjs';
 import { IConfig as ILintRecentlyConfig } from './config.mjs';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
@@ -55,7 +55,7 @@ async function getConfig(lintRecentlyConfig: ILintRecentlyConfig) {
 }
 
 async function getDiffArgs(lintRecentlyConfig: ILintRecentlyConfig): Promise<string> {
-  const commitDateLatest = await getLatestCommitDate('HEAD');
+  const commitDateLatest = await getLatestCommitDate();
 
   // empty git history
   if (!commitDateLatest) {
@@ -68,7 +68,7 @@ async function getDiffArgs(lintRecentlyConfig: ILintRecentlyConfig): Promise<str
     .subtract(lintRecentlyConfig.days ?? 3, 'day')
     .format(dayjsFormat);
 
-  const commitHashLatest = await execGit(['log', '-1', '--pretty=format:%H', 'HEAD']);
+  const commitHashLatest = await getLatestCommitHash();
   let commitHashBefore = await execGit([
     'log',
     '-1',
