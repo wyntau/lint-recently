@@ -1,4 +1,4 @@
-import execa from 'execa';
+import { execa, Options as execaOptions } from 'execa';
 import { debugLib } from './debug.mjs';
 
 const debug = debugLib('git');
@@ -10,7 +10,7 @@ const debug = debugLib('git');
 const NO_SUBMODULE_RECURSE = ['-c', 'submodule.recurse=false'];
 const GIT_GLOBAL_OPTIONS = [...NO_SUBMODULE_RECURSE];
 
-export type IExecGitOptions = execa.Options;
+export type IExecGitOptions = execaOptions;
 export async function execGit(cmd: Array<string>, options: IExecGitOptions = {}): Promise<string> {
   debug('Running git command: %s', cmd.join(' '));
   try {

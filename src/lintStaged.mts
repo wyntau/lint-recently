@@ -79,5 +79,5 @@ export async function getDiffOption(lintRecentlyConfig: ILintRecentlyConfig): Pr
   }
 
   debug("get --diff args: '%s %s'", commitHashBefore, commitHashLatest);
-  return `${commitHashBefore} ${commitHashLatest}`;
+  return `${commitHashBefore}...${commitHashLatest}`;
 }
