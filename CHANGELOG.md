@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1
+### Fixed
+- fix error when not in git repo
+
 ## 0.2.0
 ### Breaking
 - This package is now pure ESM. Please [read this](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
