@@ -55,7 +55,7 @@
     "eslint": "DEBUG=eslint:cli-engine eslint .",
     "eslint-fix": "DEBUG=eslint:cli-engine eslint --fix .",
     "prepare": "husky install || exit 0",
-    "build": "tsc",
+    "build": "tsc && cp src/schema.json dist",
     "watch": "tsc -w",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build",

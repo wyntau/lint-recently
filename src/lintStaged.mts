@@ -5,13 +5,14 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import pMap from 'p-map';
 import { debugLib } from './debug.mjs';
+import { ILintRecentlyOptions } from 'index.mjs';
 
 dayjs.extend(customParseFormat);
 const debug = debugLib('lintStaged');
 
 type lintStagedConfigFn = (files: Array<string>) => string | Array<string> | Promise<string | Array<string>>;
 
-export async function getConfigObj(lintRecentlyConfig: ILintRecentlyConfig) {
+async function getConfig(lintRecentlyConfig: ILintRecentlyConfig) {
   const filePatterns = Object.keys(lintRecentlyConfig.patterns);
   const ROOT_PATH = await getRootPath();
 
@@ -47,10 +48,11 @@ export async function getConfigObj(lintRecentlyConfig: ILintRecentlyConfig) {
     return config;
   }, {});
 
+  debug('get lint-staged config: %O', lintStagedConfig);
   return lintStagedConfig;
 }
 
-export async function getDiffOption(lintRecentlyConfig: ILintRecentlyConfig): Promise<string> {
+async function getDiffArgs(lintRecentlyConfig: ILintRecentlyConfig): Promise<string> {
   const commitDateLatest = await getLatestCommitDate('HEAD');
 
   // empty git history
@@ -78,6 +80,19 @@ export async function getDiffOption(lintRecentlyConfig: ILintRecentlyConfig): Pr
     commitHashBefore = await execGit(['rev-list', '--max-parents=0', 'HEAD']);
   }
 
-  debug("get --diff args: '%s %s'", commitHashBefore, commitHashLatest);
-  return `${commitHashBefore}...${commitHashLatest}`;
+  const diffArgs = `${commitHashBefore}...${commitHashLatest}`;
+  debug("get lint-staged --diff args: '%s'", diffArgs);
+  return diffArgs;
+}
+
+export async function getOptions(lintRecentlyOptions: ILintRecentlyOptions): Promise<Record<string, any>> {
+  const lintRecentlyConfig = lintRecentlyOptions.config!;
+  const lintStagedOptions = {
+    ...lintRecentlyOptions,
+    diff: await getDiffArgs(lintRecentlyConfig),
+    config: await getConfig(lintRecentlyConfig),
+  };
+
+  debug('get lint-staged options: %O', lintStagedOptions);
+  return lintStagedOptions;
 }
