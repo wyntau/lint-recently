@@ -278,11 +278,6 @@
   resolved "https://registry.npmmirror.com/@tsconfig/node16/download/@tsconfig/node16-1.0.2.tgz#423c77877d0569db20e1fc80885ac4118314010e"
   integrity sha1-Qjx3h30Fadsg4fyAiFrEEYMUAQ4=
 
-"@types/braces@*":
-  version "3.0.1"
-  resolved "https://registry.npmmirror.com/@types/braces/download/@types/braces-3.0.1.tgz#5a284d193cfc61abb2e5a50d36ebbc50d942a32b"
-  integrity sha1-WihNGTz8Yauy5aUNNuu8UNlCoys=
-
 "@types/commander@^2.12.2":
   version "2.12.2"
   resolved "https://registry.npmmirror.com/@types/commander/-/commander-2.12.2.tgz#183041a23842d4281478fa5d23c5ca78e6fd08ae"
@@ -301,13 +296,6 @@
   version "7.0.11"
   resolved "https://registry.npmmirror.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
   integrity sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==
-
-"@types/micromatch@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.npmmirror.com/@types/micromatch/download/@types/micromatch-4.0.2.tgz#ce29c8b166a73bf980a5727b1e4a4d099965151d"
-  integrity sha1-zinIsWanO/mApXJ7HkpNCZllFR0=
-  dependencies:
-    "@types/braces" "*"
 
 "@types/minimist@^1.2.0":
   version "1.2.2"
@@ -333,11 +321,6 @@
   version "2.4.1"
   resolved "https://registry.npmmirror.com/@types/normalize-package-data/download/@types/normalize-package-data-2.4.1.tgz#d3357479a0fdfdd5907fe67e17e0a85c906e1301"
   integrity sha1-0zV0eaD9/dWQf+Z+F+CoXJBuEwE=
-
-"@types/normalize-path@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.npmmirror.com/@types/normalize-path/download/@types/normalize-path-3.0.0.tgz#bb5c46cab77b93350b4cf8d7ff1153f47189ae31"
-  integrity sha1-u1xGyrd7kzULTPjX/xFT9HGJrjE=
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
