@@ -72,6 +72,7 @@ lintRecently(options)
   .then((passed) => {
     process.exitCode = passed ? 0 : 1;
   })
-  .catch(() => {
+  .catch((error) => {
+    console.error(error);
     process.exitCode = 1;
   });

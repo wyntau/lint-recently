@@ -40,5 +40,5 @@ export async function getLatestCommitHash(path = 'HEAD'): Promise<string> {
 }
 
 export function getRootDir(): Promise<string> {
-  return execGit(['git', 'rev-parse', '--show-toplevel']);
+  return execGit(['rev-parse', '--show-toplevel']);
 }
