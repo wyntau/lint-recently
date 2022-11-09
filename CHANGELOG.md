@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.2
+### Fixed
+- fix git command error when get git repo root dir
+
 ## 0.2.1
 ### Fixed
 - fix error when not in git repo
