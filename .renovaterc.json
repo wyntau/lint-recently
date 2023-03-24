@@ -5,12 +5,5 @@
     ":preserveSemverRanges",
     "github>wyntau/renovate-config:eslint+prettier",
     "github>wyntau/renovate-config:typescript"
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["p-map", "cli-truncate", "supports-color"],
-      "matchUpdateTypes": ["major"],
-      "enabled": false
-    }
   ]
 }
