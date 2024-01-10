@@ -3,7 +3,7 @@
   "version": "0.2.2",
   "description": "lint recently git commited files",
   "engines": {
-    "node": "^14.13.1 || >=16.0.0"
+    "node": ">=16.0.0"
   },
   "type": "module",
   "bin": "./dist/bin.mjs",
