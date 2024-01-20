@@ -42,7 +42,7 @@
     "dayjs": "^1.10.7",
     "debug": "^4.3.2",
     "execa": "^8.0.1",
-    "p-map": "6.x",
+    "p-map": "7.x",
     "supports-color": "^9.2.3",
     "tslib": "^2.6.2"
   },
