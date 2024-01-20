@@ -30,7 +30,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
     "husky": "^8.0.1",
-    "lint-staged": "14.x",
+    "lint-staged": "15.x",
     "prettier": "^3.0.0",
     "type-fest": "^4.9.0",
     "typescript": "^5.3.3"
@@ -47,7 +47,7 @@
     "tslib": "^2.6.2"
   },
   "peerDependencies": {
-    "lint-staged": "^13.0.3"
+    "lint-staged": "^15.0.0"
   },
   "scripts": {
     "eslint": "DEBUG=eslint:cli-engine eslint .",
