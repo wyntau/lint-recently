@@ -329,10 +329,12 @@
   resolved "https://registry.npmmirror.com/@types/node/-/node-14.18.33.tgz#8c29a0036771569662e4635790ffa9e057db379b"
   integrity sha512-qelS/Ra6sacc4loe/3MSjXNL1dNQ/GjxNHVzuChwMfmk7HuycRLVQN2qNY3XahK+fZc5E2szqQSKUyAF0E+2bg==
 
-"@types/node@^16.10.3":
-  version "16.10.3"
-  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-16.10.3.tgz#7a8f2838603ea314d1d22bb3171d899e15c57bd5"
-  integrity sha1-eo8oOGA+oxTR0iuzFx2JnhXFe9U=
+"@types/node@^20.0.0":
+  version "20.8.7"
+  resolved "https://registry.npmmirror.com/@types/node/-/node-20.8.7.tgz#ad23827850843de973096edfc5abc9e922492a25"
+  integrity sha512-21TKHHh3eUHIi2MloeptJWALuCu5H7HQTdTrWIFReA8ad+aggoX+lRes3ex7/FtpC+sVUpFMQ+QTfYr74mruiQ==
+  dependencies:
+    undici-types "~5.25.1"
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -2321,6 +2323,11 @@ typescript@^5.3.3:
   version "5.3.3"
   resolved "https://registry.npmmirror.com/typescript/-/typescript-5.3.3.tgz#b3ce6ba258e72e6305ba66f5c9b452aaee3ffe37"
   integrity sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==
+
+undici-types@~5.25.1:
+  version "5.25.3"
+  resolved "https://registry.npmmirror.com/undici-types/-/undici-types-5.25.3.tgz#e044115914c85f0bcbb229f346ab739f064998c3"
+  integrity sha512-Ga1jfYwRn7+cP9v8auvEXN1rX3sWqlayd4HP7OKk4mZWylEmu3KzXDUGrQUN6Ol7qo1gPvB2e5gX6udnyEPgdA==
 
 universalify@^2.0.0:
   version "2.0.0"
